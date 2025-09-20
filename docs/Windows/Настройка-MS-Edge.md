@@ -1,13 +1,18 @@
-# Настройка бразуера MS Edge
+---
+tags:
+  - Windows
+  - MS Edge
+---
 
-1. В поисковое поле вставить:
+# Налаштування браузера MS Edge
 
-```
+### 1. У пошуковому полі вставити:
+```bash
 edge://flags/
 ```
 
-2. Включить:
-- Smooth scrolling
-- Experimental QUIC protocol
-- Parallel downloading
-- Show Windows 11 visual effects in browser (чтобы влкючить: параметры - внещний вид - показать визуальные эффекты Windows 11 в браузере)
+### 2. Увімкнути:
+ - Smooth scrolling
+ - Experimental QUIC protocol
+ - Parallel downloading
+ - Show Windows 11 visual effects in browser (щоб увімкнути: Параметри → Зовнішній вигляд → Показати візуальні ефекти Windows 11 у браузері)
