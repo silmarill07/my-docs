@@ -1,0 +1,70 @@
+---
+tags:
+  - Linux
+  - Debian
+  - Manjaro (Arch)
+---
+
+# Alias (Terminal)
+
+## Debian / Ubuntu (nala/apt)
+
+- В этом разделе алиасы для быстрого управления пакетами через `nala` и `apt`:
+
+```bash
+alias nalai='sudo nala install'
+alias apti='sudo apt install'
+alias nalar='sudo nala remove'
+alias aptr='sudo apt remove'
+alias nalaar='sudo nala autoremove'
+alias aptar='sudo apt autoremove'
+alias nalaud='sudo nala update'
+alias nalaug='sudo nala upgrade'
+alias aptud='sudo apt update'
+alias aptug='sudo apt upgrade'
+alias c='clear'
+alias wc='warp-cli connect'
+alias wd='warp-cli disconnect'
+alias ws='warp-cli status'
+alias gps='globalprotect show --status'
+alias gpc='globalprotect connect'
+alias gpd='globalprotect disconnect'
+alias p3='python3'
+```
+
+- Чтобы изменения вступили в силу:
+
+```
+source ~/.bashrc
+```
+
+## Pacman (Arch / Manjaro)
+
+- Алиасы и функции для Pacman и вспомогательных инструментов:
+
+```bash
+alias md='mkdir'
+alias pacmanr='sudo pacman -Rns'
+alias pacmans='pacman -Ss'
+alias pacmanug='sudo pacman -Syu'
+alias pacmani='sudo pacman -S'
+alias c='clear'
+alias wc='warp-cli connect'
+alias wd='warp-cli disconnect'
+alias ws='warp-cli status'
+alias gps='globalprotect show --status'
+alias gpc='globalprotect connect'
+alias gpd='globalprotect disconnect'
+alias p3='python3'
+pacmanar() {
+  orphans=$(pacman -Qdtq)
+  if [ -z "$orphans" ]; then
+    echo "✅ Нет осиротевших пакетов."
+  else
+    sudo pacman -Rns $orphans
+  fi
+}
+alias off='shutdown now'
+alias rb='reboot'
+alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
+```
