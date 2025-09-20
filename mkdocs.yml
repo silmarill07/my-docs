@@ -57,3 +57,8 @@ plugins:
 
 extra_javascript:
   - javascripts/scroll.js
+
+extra:
+  meta:
+    - name: robots
+      content: noindex, nofollow

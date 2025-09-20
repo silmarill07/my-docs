@@ -10,10 +10,8 @@ tags:
 
 ## Кроки налаштування
 
-1. Відкрийте термінал та виконайте команду для перемикання розкладки через Alt+Shift:
+ - Відкрийте термінал та виконайте команду для перемикання розкладки через Alt+Shift:
 
 ```bash
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
 ```
-
-2. У програмі Gnome Tweaks активуйте перемикання розкладки клавіатури за допомогою Alt+Shift.
