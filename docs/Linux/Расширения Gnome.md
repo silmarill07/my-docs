@@ -15,7 +15,7 @@ tags:
 AppIndicator and KStatusNotifierItem Support
 ```
 
-### 2. Розмиття вікон*
+### 2. Розмиття вікон
 ```bash
 Blur my shell
 ```
