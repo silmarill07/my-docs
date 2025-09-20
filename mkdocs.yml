@@ -1,5 +1,6 @@
 site_name: My Docs
 site_url: https://silmarill07.github.io/docs/
+repo_name: docs
 
 theme:
   name: material
