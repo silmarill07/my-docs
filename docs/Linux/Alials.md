@@ -5,11 +5,11 @@ tags:
   - Manjaro (Arch)
 ---
 
-# Alias (Terminal)
+# Аліаси (Термінал)
 
 ## Debian / Ubuntu (nala/apt)
 
-- В этом разделе алиасы для быстрого управления пакетами через `nala` и `apt`:
+- У цьому розділі наведені аліаси для швидкого керування пакетами через `nala` та `apt`:
 
 ```bash
 alias nalai='sudo nala install'
@@ -32,39 +32,36 @@ alias gpd='globalprotect disconnect'
 alias p3='python3'
 ```
 
-- Чтобы изменения вступили в силу:
-
-```
+- Щоб зміни набули чинності:
+```bash
 source ~/.bashrc
 ```
 
 ## Pacman (Arch / Manjaro)
-
-- Алиасы и функции для Pacman и вспомогательных инструментов:
-
-```bash
-alias md='mkdir'
-alias pacmanr='sudo pacman -Rns'
-alias pacmans='pacman -Ss'
-alias pacmanug='sudo pacman -Syu'
-alias pacmani='sudo pacman -S'
-alias c='clear'
-alias wc='warp-cli connect'
-alias wd='warp-cli disconnect'
-alias ws='warp-cli status'
-alias gps='globalprotect show --status'
-alias gpc='globalprotect connect'
-alias gpd='globalprotect disconnect'
-alias p3='python3'
-pacmanar() {
-  orphans=$(pacman -Qdtq)
-  if [ -z "$orphans" ]; then
-    echo "✅ Нет осиротевших пакетов."
-  else
-    sudo pacman -Rns $orphans
-  fi
-}
-alias off='shutdown now'
-alias rb='reboot'
-alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
-```
+  - Аліаси та функції для Pacman і допоміжних інструментів:
+  ```bash
+  alias md='mkdir'
+  alias pacmanr='sudo pacman -Rns'
+  alias pacmans='pacman -Ss'
+  alias pacmanug='sudo pacman -Syu'
+  alias pacmani='sudo pacman -S'
+  alias c='clear'
+  alias wc='warp-cli connect'
+  alias wd='warp-cli disconnect'
+  alias ws='warp-cli status'
+  alias gps='globalprotect show --status'
+  alias gpc='globalprotect connect'
+  alias gpd='globalprotect disconnect'
+  alias p3='python3'
+  pacmanar() {
+    orphans=$(pacman -Qdtq)
+    if [ -z "$orphans" ]; then
+      echo "✅ Осиротілих пакетів немає."
+    else
+      sudo pacman -Rns $orphans
+    fi
+  }
+  alias off='shutdown now'
+  alias rb='reboot'
+  alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
+  ```
