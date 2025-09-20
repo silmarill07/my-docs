@@ -1,6 +1,5 @@
 site_name: My Docs
 site_url: https://silmarill07.github.io/docs/
-repo_name: docs
 
 theme:
   name: material
@@ -44,16 +43,14 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
-
-plugins:
-  - search
-  - tags
-
-markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences  
+
+
+plugins:
+  - search
+  - tags
