@@ -20,10 +20,8 @@ theme:
     - content.tabs
     - content.code.copy
   nav:
-    Linux:
-      - Alias: alias.md
-    Windows:
-      - Настройка MS Edge: Настройка-MS-Edge.md
+    Linux: alias.md
+    Windows: Настройка-MS-Edge.md
     Tags: tags.md 
     Other: Service-Worker.md
 
