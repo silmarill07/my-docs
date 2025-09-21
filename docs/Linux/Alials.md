@@ -7,10 +7,16 @@ tags:
 
 # Аліаси (Термінал)
 
+```bash
+nano ~/.bashrc
+```
+```bash
+nano ~/.zshrc
+```
+
 ## Debian / Ubuntu (nala/apt)
 
 - У цьому розділі наведені аліаси для швидкого керування пакетами через `nala` та `apt`:
-
 ```bash
 alias nalai='sudo nala install'
 alias apti='sudo apt install'
@@ -41,6 +47,9 @@ alias gitp='git push origin main'
 - Щоб зміни набули чинності:
 ```bash
 source ~/.bashrc
+```
+```bash
+source ~/.zshrc
 ```
 
 ## Pacman (Arch / Manjaro)
