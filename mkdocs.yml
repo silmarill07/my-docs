@@ -25,6 +25,7 @@ theme:
     Windows:
       - Настройка MS Edge: Настройка-MS-Edge.md
     Tags: tags.md 
+    Other: Service-Worker.md
 
   palette: 
   # Palette toggle for light mode
