@@ -30,6 +30,12 @@ alias gps='globalprotect show --status'
 alias gpc='globalprotect connect'
 alias gpd='globalprotect disconnect'
 alias p3='python3'
+alias gita='git add .'
+gitc() {
+  read "msg?Введите название коммита: "
+  GIT_EDITOR=true git commit -m "$msg"
+}
+alias gitp='git push origin main'
 ```
 
 - Щоб зміни набули чинності:
@@ -64,4 +70,10 @@ source ~/.bashrc
   alias off='shutdown now'
   alias rb='reboot'
   alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
+  alias gita='git add .'
+  gitc() {
+    read "msg?Введите название коммита: "
+    GIT_EDITOR=true git commit -m "$msg"
+  }
+  alias gitp='git push origin main'
   ```
