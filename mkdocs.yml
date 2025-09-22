@@ -3,6 +3,8 @@ site_url: https://silmarill07.github.io/docs/
 
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/favicon.png
   features:
     - navigation.instant
     - navigation.instant.progress
@@ -54,10 +56,10 @@ plugins:
   - search
   - tags
 
-extra_javascript:
-  - javascripts/scroll.js
-
 extra:
   meta:
     - name: robots
       content: noindex, nofollow
+  generator: false
+  
+copyright: Copyright &copy; 2025 My Docs
