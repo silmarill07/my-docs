@@ -16,4 +16,8 @@
 
 ## ℹ️ Про проект
 
-Цей сайт створений на основі **[MkDocs Material](https://squidfunk.github.io/mkdocs-material/)**
+Цей сайт створений на основі **[MkDocs Material](https://squidfunk.github.io/mkdocs-material/)**  
+
+---
+
+![Скриншот сайту](assets/screen.png)
