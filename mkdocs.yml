@@ -15,13 +15,13 @@ theme:
     - navigation.path
     - navigation.top
     - navigation.top.autohide
+    - navigation.footer 
     - toc.follow
     - search.suggest
     - search.highlight
     - search.share
     - content.tabs
     - content.code.copy
-    - navigation.footer
   palette: 
     # Palette toggle for light mode
     - scheme: default
@@ -83,6 +83,7 @@ markdown_extensions:
 plugins:
   - search
   - tags
+  - offline
 
 extra:
   meta:
