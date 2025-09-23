@@ -20,4 +20,4 @@
 
 ---
 
-![Скриншот сайту](assets/screen.png)
+![Скриншот сайту](docs/assets/screen.png)
