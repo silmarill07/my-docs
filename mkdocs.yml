@@ -11,10 +11,10 @@ theme:
     - navigation.instant.preview
     - navigation.tracking
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.expand
     - navigation.path
     - navigation.top
+    - navigation.top.autohide
     - toc.follow
     - search.suggest
     - search.highlight
