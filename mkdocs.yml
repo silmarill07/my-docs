@@ -21,6 +21,7 @@ theme:
     - search.share
     - content.tabs
     - content.code.copy
+    - navigation.footer
   palette: 
     # Palette toggle for light mode
     - scheme: default
@@ -49,7 +50,7 @@ nav:
     - Перевірка GPU та драйверів: Linux/Перевірка GPU та драйверів.md
     - Перемикання мови у Gnome Wayland-сесії: Linux/Перемикання мови у Gnome Wayland-сесії.md
     - Додаток для автозапуску програм: Linux/Додаток для автозапуску програм.md
-    - Розширення Gnome: Linux/Расширения Gnome.md
+    - Розширення Gnome: Linux/Розширення Gnome.md
     - Світла тема для LibreOffice (flatpak): Linux/Світла тема для LibreOffice (flatpak).md
     - Скрипт для монтування диска без пароля: Linux/Скрипт для монтування диска без пароля.md
     - Якщо немає доступу до Wiki: Linux/Якщо немає доступу до Wiki.md
@@ -82,7 +83,6 @@ markdown_extensions:
 plugins:
   - search
   - tags
-  - offline
 
 extra:
   meta:
