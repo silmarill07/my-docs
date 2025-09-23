@@ -21,24 +21,52 @@ theme:
     - search.share
     - content.tabs
     - content.code.copy
-  nav:
-    Linux: alias.md
-    Windows: Настройка-MS-Edge.md
-    Tags: tags.md 
-    Other: Service-Worker.md
-
   palette: 
-  # Palette toggle for light mode
-  - scheme: default
-    toggle:
-      icon: material/brightness-7 
-      name: Switch to dark mode
-  # Palette toggle for dark mode
-  - scheme: slate
-    toggle:
-      icon: material/brightness-4
-      name: Switch to light mode
-  copyright: '2025, My Docs'
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Linux:
+    - Алиасы: Linux/Alials.md
+    - Відновлення Arch-based системи (Manjaro, CachyOS): Linux/Відновлення Arch-based системи (Manjaro, CachyOS).md
+    - Автоматичне монтування HDD: Linux/Автоматичне монтування HDD.md
+    - Відновлення завантажувача GRUB у Manjaro (Arch): Linux/Відновлення завантажувача GRUB у Manjaro (Arch).md
+    - Горячі клавіші: Linux/Горячі клавіші.md
+    - Додавання згортання та розгортання застосунків у Gnome: Linux/Додавання згортання та розгортання застосунків у Gnome.md
+    - Додаток для створення та управління ярликами: Linux/Додаток для створення та управління ярликами.md
+    - Завантаження файлів на GitHub: Linux/Завантаження файлів на GitHub.md
+    - Керування швидкістю вентиляторів: Linux/Керування швидкістю вентиляторів.md
+    - Корисні додатки: Linux/Корисні додатки.md
+    - Перевірка GPU та драйверів: Linux/Перевірка GPU та драйверів.md
+    - Перемикання мови у Gnome Wayland-сесії: Linux/Перемикання мови у Gnome Wayland-сесії.md
+    - Додаток для автозапуску програм: Linux/Додаток для автозапуску програм.md
+    - Розширення Gnome: Linux/Расширения Gnome.md
+    - Світла тема для LibreOffice (flatpak): Linux/Світла тема для LibreOffice (flatpak).md
+    - Скрипт для монтування диска без пароля: Linux/Скрипт для монтування диска без пароля.md
+    - Якщо немає доступу до Wiki: Linux/Якщо немає доступу до Wiki.md
+    - Якщо пропав інтернет…: Linux/Якщо пропав інтернет….md
+  - Windows:
+    - Налаштування браузера MS Edge: Windows/Настройка-MS-Edge.md
+    - Стиснути диск C: Windows/Стиснути-диск-C.md
+    - Видалення зайвих завантажувачів Linux: Windows/Видалення зайвих завантажувачів Linux.md
+    - Виправлення проблеми з пропадаючим курсором: Windows/Виправлення проблеми з пропадаючим курсором.md
+    - Захист налаштувань AMD Adrenalin: Windows/Захист налаштувань AMD Adrenalin.md
+    - Оптимізація SSD (диск C): Windows/Оптимизация-SSD-(диск С).md
+    - Виправлення проблем з Windows Defender: Windows/Виправлення проблем з Windows Defender.md
+    - Засіб видалення вірусів: Windows/Засіб видалення вірусів.md
+    - Стара версія додатку «Фотографії»: Windows/Стара версія додатку «Фотографії».md
+  - Other:
+    - Service Worker - Офлайн режим для будь-якого сайту: Other/Service-Worker.md
+  - Tags: tags.md
 
 markdown_extensions:
   - admonition
@@ -51,7 +79,6 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
 
-
 plugins:
   - search
   - tags
@@ -61,5 +88,5 @@ extra:
     - name: robots
       content: noindex, nofollow
   generator: false
-  
+
 copyright: Copyright &copy; 2025 My Docs
