@@ -31,10 +31,12 @@
         margin-top: 0 !important;
       }
 
-      /* Убираем боковые панели */
-      .md-sidebar--primary,
-      .md-sidebar--secondary {
-        display: none !important;
+      /* Убираем боковые панели на больших экранах */
+      @media screen and (min-width: 76.25em) {
+        .md-sidebar--primary,
+        .md-sidebar--secondary {
+          display: none !important;
+        }
       }
 
       .md-content {
