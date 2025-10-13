@@ -60,43 +60,42 @@ nano ~/.zshrc
 
 - Аліаси та функції для Pacman і допоміжних інструментів:
   
-  ```bash
-  alias md='mkdir'
-  alias pacmanr='sudo pacman -Rns'
-  alias pacmans='pacman -Ss'
-  alias pacmanug='sudo pacman -Syu'
-  alias pacmani='sudo pacman -S'
-  alias c='clear'
-  alias wc='warp-cli connect'
-  alias wd='warp-cli disconnect'
-  alias ws='warp-cli status'
-  alias gps='globalprotect show --status'
-  alias gpc='globalprotect connect'
-  alias gpd='globalprotect disconnect'
-  alias p3='python3'
+```bash
+alias md='mkdir'
+alias pacmanr='sudo pacman -Rns'
+alias pacmans='pacman -Ss'
+alias pacmanug='sudo pacman -Syu'
+alias pacmani='sudo pacman -S'
+alias c='clear'
+alias wc='warp-cli connect'
+alias wd='warp-cli disconnect'
+alias ws='warp-cli status'
+alias gps='globalprotect show --status'
+alias gpc='globalprotect connect'
+alias gpd='globalprotect disconnect'
+alias p3='python3'
 pacmanar() {
-  orphans=($(pacman -Qdtq 2>/dev/null))
-  if [ ${#orphans[@]} -eq 0 ]; then
-    echo "✅ Нет осиротевших пакетов."
+orphans=($(pacman -Qdtq 2>/dev/null))
+if [ ${#orphans[@]} -eq 0 ]; then
+  echo "✅ Нет осиротевших пакетов."
+else
+  echo "🗑 Найдены осиротевшие пакеты:"
+  printf '%s\n' "${orphans[@]}"
+  read -r "ans?❓ Удалить их? [y/N] "
+  if [[ "$ans" =~ ^[Yy]$ ]]; then
+    sudo pacman -Rns "${orphans[@]}"
   else
-    echo "🗑 Найдены осиротевшие пакеты:"
-    printf '%s\n' "${orphans[@]}"
-    read -r "ans?❓ Удалить их? [y/N] "
-    if [[ "$ans" =~ ^[Yy]$ ]]; then
-      sudo pacman -Rns "${orphans[@]}"
-    else
-      echo "🚫 Отмена."
-    fi
+    echo "🚫 Отмена."
   fi
+fi
 }
-
-  alias off='shutdown now'
-  alias rb='reboot'
-  alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
-  alias gita='git add .'
-  gitc() {
-  read "msg?Введите название коммита: "
-  GIT_EDITOR=true git commit -m "$msg"
-  }
-  alias gitp='git push origin main'
-  ```
+alias off='shutdown now'
+alias rb='reboot'
+alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
+alias gita='git add .'
+gitc() {
+read "msg?Введите название коммита: "
+GIT_EDITOR=true git commit -m "$msg"
+}
+alias gitp='git push origin main'
+```
