@@ -74,22 +74,22 @@ nano ~/.zshrc
   alias gpc='globalprotect connect'
   alias gpd='globalprotect disconnect'
   alias p3='python3'
-  pacmanar() {
-    orphans=$(pacman -Qdtq 2>/dev/null)
-    if [ -z "$orphans" ]; then
-      echo "✅ Нет осиротевших пакетов."
+pacmanar() {
+  orphans=($(pacman -Qdtq 2>/dev/null))
+  if [ ${#orphans[@]} -eq 0 ]; then
+    echo "✅ Нет осиротевших пакетов."
+  else
+    echo "🗑 Найдены осиротевшие пакеты:"
+    printf '%s\n' "${orphans[@]}"
+    read -r "ans?❓ Удалить их? [y/N] "
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+      sudo pacman -Rns "${orphans[@]}"
     else
-      echo "🗑 Найдены осиротевшие пакеты:"
-      echo "$orphans"
-      echo -n "❓ Удалить их? [y/N] "
-      read ans
-      if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
-        sudo pacman -Rns $orphans
-      else
-        echo "🚫 Отмена."
-      fi
+      echo "🚫 Отмена."
     fi
-  }
+  fi
+}
+
   alias off='shutdown now'
   alias rb='reboot'
   alias counti='count=0; for f in *; do [[ -f $f && $f != *_* ]] && ((count++)); done; echo $count'
