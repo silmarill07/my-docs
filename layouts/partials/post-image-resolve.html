@@ -1,0 +1,84 @@
+{{/*
+  Resolves post image from front matter, page resources, asset resources, or auto-discovery.
+  Falls back to section default image (assets/img/<section>.png) if no image found.
+  Returns a dictionary with 'image' (path string) and 'imageResource' (resource object).
+*/}}
+{{ $image := .Params.image }}
+{{ $imageResource := false }}
+
+{{ if $image }}
+  {{/* Try as page resource (content folder) */}}
+  {{ $imageResource = .Resources.Get $image }}
+  {{ if not $imageResource }}
+    {{ $imageResource = .Resources.GetMatch $image }}
+  {{ end }}
+
+  {{/* Try as asset resource (assets folder) */}}
+  {{ if not $imageResource }}
+    {{ $imageResource = resources.Get $image }}
+  {{ end }}
+{{ else }}
+  {{/* Auto-discovery: try static/images/ and assets/images/ by slug */}}
+  {{ $titleSlug := "" }}
+  {{ if .File }}
+    {{ $titleSlug = .File.TranslationBaseName | urlize }}
+  {{ else }}
+    {{ $titleSlug = .Title | urlize }}
+  {{ end }}
+  {{ $imageExtensions := slice ".png" ".jpg" ".jpeg" ".webp" }}
+  {{ range $imageExtensions }}
+    {{ $potentialImage := printf "/images/%s%s" $titleSlug . }}
+    {{ $staticPath := printf "static/images/%s%s" $titleSlug . }}
+    {{ $assetPath := printf "assets/images/%s%s" $titleSlug . }}
+
+    {{ if not (findRE "%" $staticPath) }}
+      {{ if fileExists $staticPath }}
+        {{ $image = $potentialImage }}
+        {{ break }}
+      {{ end }}
+    {{ end }}
+
+    {{ if not (findRE "%" $assetPath) }}
+      {{ if fileExists $assetPath }}
+        {{ $image = $potentialImage }}
+        {{ $imageResource = resources.Get (printf "images/%s%s" $titleSlug .) }}
+        {{ break }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  {{/* Inherit from another translation */}}
+  {{ if not $image }}
+    {{ range .AllTranslations }}
+      {{ if ne .Lang $.Lang }}
+        {{ $resolved := partial "post-image-resolve.html" . }}
+        {{ if $resolved.image }}
+          {{ $image = $resolved.image }}
+          {{ $imageResource = $resolved.imageResource }}
+          {{ break }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  {{/* Section default fallback: assets/img/<section>.png */}}
+  {{ if not $image }}
+    {{ $section := "" }}
+    {{ if and .FirstSection .FirstSection.File }}
+      {{ $section = .FirstSection.File.ContentBaseName }}
+    {{ else if .Section }}
+      {{ $section = .Section }}
+    {{ end }}
+    {{ $sectionDefaults := dict "linux" "img/linux.png" "windows" "img/windows.png" "other" "img/other.png" }}
+    {{ $defaultAsset := index $sectionDefaults $section }}
+    {{ if $defaultAsset }}
+      {{ $res := resources.Get $defaultAsset }}
+      {{ if $res }}
+        {{ $image = $defaultAsset }}
+        {{ $imageResource = $res }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ return (dict "image" $image "imageResource" $imageResource) }}

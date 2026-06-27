@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 2rem;
+  gap: 1rem;
+">
+  <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="opacity:0.4">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+      d="M18.364 5.636a9 9 0 010 12.728M15.536 8.464a5 5 0 010 7.072M12 12h.01
+         M3 3l18 18M6.343 6.343A8.966 8.966 0 003 12a9 9 0 009 9 8.966 8.966 0 005.657-2.343"/>
+  </svg>
+  <h1 style="font-size:1.75rem; font-weight:700; margin:0">Немає з'єднання</h1>
+  <p style="color:var(--text-secondary); margin:0">
+    Перевір підключення до інтернету і спробуй ще раз.
+  </p>
+  <a href="/" style="
+    margin-top: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    background: var(--accent-primary);
+    color: #fff;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 500;
+  ">На головну</a>
+</div>
+{{ end }}

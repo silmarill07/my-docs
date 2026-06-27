@@ -1,0 +1,27 @@
+{{ $resolved := partial "post-image-resolve.html" . }}
+{{ $image := $resolved.image }}
+{{ $imageResource := $resolved.imageResource }}
+
+{{ if $image }}
+  <div class="post-image-single">
+    {{ if $imageResource }}
+      {{/* Process image: resize to article width, convert to WebP, quality 85% */}}
+      {{ $processed := $imageResource.Process "fit 1200x630 webp q85 smart" }}
+      {{ $processed2x := $imageResource.Process "fit 2400x1260 webp q75 smart" }}
+      <img
+        src="{{ $processed.RelPermalink }}"
+        srcset="{{ $processed.RelPermalink }} 1x, {{ $processed2x.RelPermalink }} 2x"
+        alt="{{ if .Description }}{{ .Description }}{{ else }}{{ .Title }}{{ end }}"
+        loading="eager"
+        width="{{ $processed.Width }}"
+        height="{{ $processed.Height }}">
+    {{ else }}
+      <img
+        src="{{ $image | relURL }}"
+        alt="{{ if .Description }}{{ .Description }}{{ else }}{{ .Title }}{{ end }}"
+        loading="eager"
+        width="1200"
+        height="630">
+    {{ end }}
+  </div>
+{{ end }}

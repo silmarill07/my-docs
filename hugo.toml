@@ -1,0 +1,109 @@
+baseURL = 'https://mydocs.pp.ua/'
+theme = "mana"
+defaultContentLanguage = "uk"
+
+# Пагінація
+[pagination]
+  pageSize = 10
+
+# Зміст (table of contents)
+[markup]
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 6
+    ordered = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    noClasses = false
+    style = "catppuccin-macchiato"
+
+# Формати виводу для пошуку
+[outputs]
+  home = ["HTML", "JSON"]
+
+# Sitemap
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+# Спільні параметри
+[params]
+  enableIntegrity = false
+  relatedPostsCount = 3
+  description = "Мій сайт документації"
+  author = "My Docs"
+  heroTitleLine1 = "My Docs"
+  heroTitleLine2 = "ДОКУМЕНТАЦІЯ"
+  footerText = "Створено за допомогою Hugo та теми Mana"
+
+  # Логотип у хедері
+  [params.logo]
+    assetPath = "img/logo.png"
+
+  # Налаштування favicon — використовуємо logo.png
+  [params.favicons]
+    ico = "/favicon.png"
+    png = "/favicon.png"
+    png16 = "/favicon.png"
+    png32 = "/favicon.png"
+    apple180 = "/favicon.png"
+    android192 = "/favicon.png"
+    android512 = "/favicon.png"
+
+  [params.codeHighlight]
+    darkTheme = "catppuccin-macchiato"
+    lightTheme = "catppuccin-frappe"
+
+  [params.copyright]
+    startYear = 2025
+    owner = "My Docs"
+
+# Українська мова (єдина)
+[languages.uk]
+  locale = "uk-UA"
+  label = "Українська"
+  direction = "ltr"
+  weight = 1
+  title = "My Docs"
+
+  [languages.uk.params]
+    description = "Мій сайт документації"
+    author = "My Docs"
+    heroTitleLine1 = "МІЙ САЙТ"
+    heroTitleLine2 = "ДОКУМЕНТАЦІЯ"
+    custom404Message = "На жаль, сторінку, яку ви шукаєте, не вдалося знайти."
+    footerText = "Створено за допомогою Hugo та теми Mana"
+
+  [[languages.uk.menus.main]]
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+
+  [[languages.uk.menus.main]]
+    name = "Linux"
+    pageRef = "/linux"
+    weight = 20
+
+  [[languages.uk.menus.main]]
+    name = "Windows"
+    pageRef = "/windows"
+    weight = 30
+
+  [[languages.uk.menus.main]]
+    name = "Other"
+    pageRef = "/other"
+    weight = 40
+
+  [[languages.uk.menus.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 50

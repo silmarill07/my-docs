@@ -1,0 +1,25 @@
+{{ $src := .Destination }}
+{{ $alt := .PlainText }}
+{{ $title := .Title }}
+
+{{/* Try to get image as page resource (same folder as article) */}}
+{{ $resource := .Page.Resources.GetMatch $src }}
+
+{{ if $resource }}
+  {{/* Process: convert to WebP, max width 1200px, quality 85% */}}
+  {{ $processed := $resource.Process "fit 1200x2000 webp q85 smart" }}
+  <img
+    src="{{ $processed.RelPermalink }}"
+    alt="{{ $alt }}"
+    {{ with $title }}title="{{ . }}"{{ end }}
+    loading="lazy"
+    width="{{ $processed.Width }}"
+    height="{{ $processed.Height }}">
+{{ else }}
+  {{/* External URL or static file — render as-is */}}
+  <img
+    src="{{ $src | safeURL }}"
+    alt="{{ $alt }}"
+    {{ with $title }}title="{{ . }}"{{ end }}
+    loading="lazy">
+{{ end }}

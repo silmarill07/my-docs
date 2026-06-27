@@ -1,0 +1,87 @@
+# Переклади для сповіщень/підказок
+note = "Примітка"
+tip = "Порада"
+important = "Важливо"
+warning = "Увага"
+caution = "Обережно"
+info = "Інформація"
+success = "Успіх"
+question = "Питання"
+danger = "Небезпека"
+bug = "Помилка"
+example = "Приклад"
+
+# Заголовок та навігація
+menu = "Меню"
+search = "Пошук"
+searchPlaceholder = "Пошук..."
+clearSearch = "Очистити пошук"
+closeSearch = "Закрити пошук"
+toggleMenu = "Відкрити/закрити меню"
+closeMenu = "Закрити меню"
+toggleTheme = "Змінити тему"
+language = "Мова"
+
+# Доступність
+skipToMain = "Перейти до основного вмісту"
+scrollToTop = "Вгору"
+
+# Головна
+home = "Головна"
+recentPosts = "Останні записи"
+
+# Список та фільтри
+posts = "Записи"
+filters = "Фільтри"
+searchTags = "Пошук теґів..."
+tagsLabel = "Теґи"
+yearMonth = "Рік та місяць"
+allDates = "Всі дати"
+clearFilters = "Скинути фільтри"
+
+# Пагінація
+pageOf = "Сторінка %s з %s"
+postSingular = "запис"
+postPlural = "записів"
+pageSingular = "сторінка"
+pagePlural = "сторінок"
+postsOnThisPage = "на цій сторінці"
+paginationFirst = "Перша"
+paginationPrev = "Попередня"
+paginationNext = "Наступна"
+paginationLast = "Остання"
+
+# Навігаційні посилання
+backToHome = "На головну"
+allTags = "Всі теґи"
+readMore = "Читати далі"
+
+# Архів
+archive = "Архів"
+
+# Окремий запис
+relatedPosts = "Схожі записи"
+tags = "Теґи"
+navPrev = "Попередній"
+navNext = "Наступний"
+
+# Метадані запису
+wordCount = "слів"
+readingTime = "хв"
+
+# Зміст
+tableOfContents = "Зміст"
+toggleToc = "Відкрити/закрити зміст"
+
+# Сторінка теґів
+tagsHelp = "Натисніть на теґ, щоб переглянути відповідні записи"
+searchNoResults = "Нічого не знайдено"
+searchNoTagsFound = "Теґів не знайдено"
+
+# Buy Me a Coffee
+buyMeACoffeeDescription = "Підтримай мене на Buy me a coffee!"
+
+# Сторінка 404
+404Title = "Сторінку не знайдено"
+404DefaultMessage = "На жаль, сторінку, яку ви шукаєте, не вдалося знайти."
+404ReturnHome = "Повернутися на головну"

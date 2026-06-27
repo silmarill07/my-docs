@@ -1,0 +1,29 @@
+{{ $resolved := partial "post-image-resolve.html" . }}
+{{ $image := $resolved.image }}
+{{ $imageResource := $resolved.imageResource }}
+
+{{ if $image }}
+  <div class="post-image">
+    <a href="{{ .RelPermalink }}" onclick="event.stopPropagation();" aria-label="{{ i18n "readMore" }} {{ .Title }}">
+      {{ if $imageResource }}
+        {{/* Process image: resize to card size, convert to WebP, quality 82% */}}
+        {{ $processed := $imageResource.Process "fill 600x400 webp q82 smart" }}
+        {{ $processed2x := $imageResource.Process "fill 1200x800 webp q75 smart" }}
+        <img
+          src="{{ $processed.RelPermalink }}"
+          srcset="{{ $processed.RelPermalink }} 1x, {{ $processed2x.RelPermalink }} 2x"
+          alt="{{ if .Description }}{{ .Description }}{{ else }}{{ .Title }}{{ end }}"
+          loading="lazy"
+          width="{{ $processed.Width }}"
+          height="{{ $processed.Height }}">
+      {{ else }}
+        <img
+          src="{{ $image | relURL }}"
+          alt="{{ if .Description }}{{ .Description }}{{ else }}{{ .Title }}{{ end }}"
+          loading="lazy"
+          width="600"
+          height="400">
+      {{ end }}
+    </a>
+  </div>
+{{ end }}

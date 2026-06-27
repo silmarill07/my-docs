@@ -1,0 +1,34 @@
+{{ if and .IsPage (not .IsHome) }}
+{{ $section := .Parent }}
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+
+    {{/* Home */}}
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ "/" | relLangURL }}" itemprop="item">
+        <span itemprop="name">{{ i18n "home" | default "Home" }}</span>
+      </a>
+      <meta itemprop="position" content="1" />
+      <span aria-hidden="true" class="breadcrumb-sep">›</span>
+    </li>
+
+    {{/* Section (linux / windows / other) — only if not home */}}
+    {{ if and $section (not $section.IsHome) }}
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ $section.RelPermalink }}" itemprop="item">
+        <span itemprop="name">{{ $section.Title }}</span>
+      </a>
+      <meta itemprop="position" content="2" />
+      <span aria-hidden="true" class="breadcrumb-sep">›</span>
+    </li>
+    {{ end }}
+
+    {{/* Current page */}}
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span itemprop="name" class="breadcrumb-current">{{ .Title }}</span>
+      <meta itemprop="position" content="{{ if and $section (not $section.IsHome) }}3{{ else }}2{{ end }}" />
+    </li>
+
+  </ol>
+</nav>
+{{ end }}
