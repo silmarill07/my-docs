@@ -2,17 +2,15 @@
   <div class="header-content">
     <div class="header-logo">
       <a href="{{ "/" | relLangURL }}" class="logo-link" aria-label="Головна — {{ site.Title }}">
-        {{- with site.Params.logo.assetPath -}}
-          {{- $img := resources.Get . -}}
-          {{- if $img -}}
-            <img
-              src="{{ $img.RelPermalink }}"
-              alt="{{ site.Title }}"
-              class="logo-img"
-              width="32"
-              height="32"
-              loading="eager">
-          {{- end -}}
+        {{- $img := resources.Get "img/logo.png" | fingerprint -}}
+        {{- if $img -}}
+          <img
+            src="{{ $img.RelPermalink }}"
+            alt="{{ site.Title }}"
+            class="logo-img"
+            width="32"
+            height="32"
+            loading="eager">
         {{- end -}}
         <span class="logo-text">{{ site.Title }}</span>
       </a>

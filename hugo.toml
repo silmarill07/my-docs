@@ -48,6 +48,7 @@ defaultContentLanguage = "uk"
   # Логотип у хедері
   [params.logo]
     assetPath = "img/logo.png"
+    lightAssetPath = "img/logo2.png"
 
   # Налаштування favicon — використовуємо logo.png
   [params.favicons]

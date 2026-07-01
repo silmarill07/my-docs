@@ -25,6 +25,13 @@
       return;
     }
 
+    // Apply theme to html element ASAP so CSS logo switching works immediately
+    var savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      savedTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
     // Block scroll while splash is visible
     document.body.classList.add('splash-active');
 

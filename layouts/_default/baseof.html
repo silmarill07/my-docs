@@ -5,9 +5,8 @@
   </head>
   <body class="flex flex-col min-h-screen{{ if eq site.Language.Direction "rtl" }} rtl{{ end }}">
     {{- if .IsHome -}}
-      {{- with site.Params.logo.assetPath -}}
-        {{- $img := resources.Get . -}}
-        {{- if $img -}}
+      {{- $img := resources.Get "img/logo.png" | fingerprint -}}
+      {{- if $img -}}
     <div id="splash-screen" aria-hidden="true" role="presentation">
       <div class="splash-inner">
         <div class="splash-logo-wrap">
@@ -17,7 +16,6 @@
         <div class="splash-spinner"></div>
       </div>
     </div>
-        {{- end -}}
       {{- end -}}
     {{- end -}}
     <a href="#main-content" class="skip-to-main" aria-label="{{ i18n "skipToMain" }}"

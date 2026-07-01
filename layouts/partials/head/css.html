@@ -108,9 +108,10 @@
     position: relative;
     z-index: 1;
     animation: splash-pulse 2s ease-in-out infinite;
-    /* Subtle drop shadow matching accent */
     filter: drop-shadow(0 0 16px rgba(176, 99, 224, 0.5));
   }
+
+
 
   [data-theme="light"] .splash-logo {
     filter: drop-shadow(0 0 12px rgba(107, 33, 168, 0.35));
@@ -132,7 +133,7 @@
   }
 
   [data-theme="light"] .splash-title {
-    background: linear-gradient(135deg, #6b21a8 0%, #7c3aed 60%, #9333ea 100%);
+    background: linear-gradient(135deg, #c485f6 0%, #dbabff 50%, #00ffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -211,9 +212,21 @@
     font-family: var(--font-logo);
     font-size: 1.25rem;
     font-weight: 700;
-    color: inherit;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background: linear-gradient(135deg, #c485f6 0%, #dbabff 50%, #00ffff 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+
+  [data-theme="light"] .logo-text {
+    background: linear-gradient(135deg, #c485f6 0%, #dbabff 50%, #00ffff 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
   }
 </style>
