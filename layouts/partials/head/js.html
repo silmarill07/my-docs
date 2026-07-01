@@ -1,0 +1,43 @@
+{{ $constants := resources.Get "js/common/constants.js" }}
+{{ $utils := resources.Get "js/utils.js" }}
+{{ $themeToggle := resources.Get "js/theme-toggle.js" }}
+{{ $search := resources.Get "js/search.js" }}
+{{ $scrollToTop := resources.Get "js/scroll-to-top.js" }}
+{{ $navigation := resources.Get "js/navigation.js" }}
+{{   $toc := resources.Get "js/toc.js" }}
+{{ $filters := resources.Get "js/filters.js" }}
+{{ $codeBlocks := resources.Get "js/code-blocks.js" }}
+{{ $blockquotes := resources.Get "js/blockquotes.js" }}
+{{ $languageSwitcher := resources.Get "js/language-switcher.js" }}
+{{ $pageTransitions := resources.Get "js/page-transitions.js" }}
+{{ $readingProgress := resources.Get "js/reading-progress.js" }}
+{{ $js := slice $constants $utils $themeToggle $search $scrollToTop $navigation $toc $filters $codeBlocks $blockquotes $languageSwitcher $pageTransitions $readingProgress | resources.Concat "js/main.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" defer></script>
+
+<script>
+  (function () {
+    var splash = document.getElementById('splash-screen');
+    if (!splash) return;
+
+    // Block scroll while splash is visible
+    document.body.classList.add('splash-active');
+
+    function hideSplash() {
+      splash.classList.add('splash-hidden');
+      document.body.classList.remove('splash-active');
+      // Remove from DOM after transition
+      splash.addEventListener('transitionend', function () {
+        splash.remove();
+      }, { once: true });
+    }
+
+    // Hide when page is fully loaded (images, fonts, etc.)
+    if (document.readyState === 'complete') {
+      hideSplash();
+    } else {
+      window.addEventListener('load', hideSplash, { once: true });
+      // Fallback: hide after 4s no matter what
+      setTimeout(hideSplash, 4000);
+    }
+  })();
+</script>

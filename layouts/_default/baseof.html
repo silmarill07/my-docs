@@ -4,6 +4,22 @@
     {{ partial "head.html" . }}
   </head>
   <body class="flex flex-col min-h-screen{{ if eq site.Language.Direction "rtl" }} rtl{{ end }}">
+    {{- if .IsHome -}}
+      {{- with site.Params.logo.assetPath -}}
+        {{- $img := resources.Get . -}}
+        {{- if $img -}}
+    <div id="splash-screen" aria-hidden="true" role="presentation">
+      <div class="splash-inner">
+        <div class="splash-logo-wrap">
+          <img src="{{ $img.RelPermalink }}" alt="{{ site.Title }}" class="splash-logo" width="96" height="96">
+        </div>
+        <span class="splash-title">{{ site.Title }}</span>
+        <div class="splash-spinner"></div>
+      </div>
+    </div>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
     <a href="#main-content" class="skip-to-main" aria-label="{{ i18n "skipToMain" }}"
       >{{ i18n "skipToMain" }}</a
     >
