@@ -3,6 +3,7 @@ title: "Service Worker — офлайн-режим для будь-якого с
 date: 2026-06-27
 draft: false
 tags: ["other", "service sorker"]
+image: "1.png"
 description: "Перетворіть свій сайт на вебзастосунок, який може працювати навіть без підключення до Інтернету."
 ---
 
