@@ -2,7 +2,7 @@
   <div class="header-content">
     <div class="header-logo">
       <a href="{{ "/" | relLangURL }}" class="logo-link" aria-label="Головна — {{ site.Title }}">
-        {{- $img := resources.Get "img/logo.png" | fingerprint -}}
+        {{- $img := (resources.Get "img/logo.png").Process "resize 64x64 webp" | fingerprint -}}
         {{- if $img -}}
           <img
             src="{{ $img.RelPermalink }}"
