@@ -19,10 +19,17 @@
     var splash = document.getElementById('splash-screen');
     if (!splash) return;
 
+    // Show splash only on first visit per session
+    if (sessionStorage.getItem('splashShown')) {
+      splash.remove();
+      return;
+    }
+
     // Block scroll while splash is visible
     document.body.classList.add('splash-active');
 
     function hideSplash() {
+      sessionStorage.setItem('splashShown', '1');
       splash.classList.add('splash-hidden');
       document.body.classList.remove('splash-active');
       splash.addEventListener('transitionend', function () {
@@ -30,7 +37,7 @@
       }, { once: true });
     }
 
-    // Wait for BOTH: 3s minimum AND page fully loaded
+    // Wait for BOTH: 2s minimum AND page fully loaded
     var timerDone = false;
     var loadDone = false;
 
