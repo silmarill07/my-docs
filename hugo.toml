@@ -39,10 +39,9 @@ defaultContentLanguage = "uk"
 [params]
   enableIntegrity = false
   relatedPostsCount = 3
-  description = "Мій сайт документації"
+  description = "Документація до всього"
   author = "My Docs"
   heroTitleLine1 = "My Docs"
-  heroTitleLine2 = "ДОКУМЕНТАЦІЯ"
   footerText = "Створено за допомогою Hugo та теми Mana"
 
   # Логотип у хедері
@@ -77,7 +76,7 @@ defaultContentLanguage = "uk"
   title = "My Docs"
 
   [languages.uk.params]
-    description = "Мій сайт документації"
+    description = "Документація до всього"
     author = "My Docs"
     custom404Message = "На жаль, сторінку, яку ви шукаєте, не вдалося знайти."
     footerText = "Створено за допомогою Hugo та теми Mana"
