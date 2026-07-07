@@ -35,7 +35,14 @@ Startup Applications стане у пригоді, якщо потрібно:
 * тимчасово вимкнути автозапуск окремих застосунків без їх видалення;
 * керувати автозапуском через простий графічний інтерфейс.
 
-## Код програми
+## Створіть файл зі скриптом
+
+Наприклад:
+
+```bash id="drw0n9"
+nano autostart.pyw
+```
+Вставте наступний код:
 
 ``` bash
 #!/usr/bin/env python3
@@ -57,7 +64,7 @@ if not os.path.exists(AUTOSTART_DIR):
 
 class AutostartApp(Gtk.Window):
     def __init__(self):
-        Gtk.Window.__init__(self, title="Автозапуск приложений")
+        Gtk.Window.__init__(self, title="Автозапуск додатків")
         self.set_default_size(800, 400)
 
         vbox = Gtk.VBox(spacing=6)
@@ -67,12 +74,12 @@ class AutostartApp(Gtk.Window):
         self.load_autostart_items()
 
         self.treeview = Gtk.TreeView(model=self.liststore)
-        for i, column_title in enumerate(["Имя", "Команда запуска", "Таймаут (сек)"]):
+        for i, column_title in enumerate(["Назва", "Команда запуску", "Таймаут (сек)"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             self.treeview.append_column(column)
 
-        # Статус Вкл/Выкл
+        # Статус Увімк/Вимк
         renderer_status = Gtk.CellRendererText()
         column_status = Gtk.TreeViewColumn("Статус", renderer_status)
         column_status.set_cell_data_func(renderer_status, self.render_status)
@@ -81,17 +88,17 @@ class AutostartApp(Gtk.Window):
         self.treeview.connect("button-press-event", self.on_treeview_right_click)
         vbox.pack_start(self.treeview, True, True, 0)
 
-        # Кнопки снизу
+        # Кнопки знизу
         hbox = Gtk.HBox(spacing=6)
         vbox.pack_start(hbox, False, False, 0)
 
-        btn_add = Gtk.Button(label="Добавить")
+        btn_add = Gtk.Button(label="Додати")
         btn_add.connect("clicked", self.on_add_clicked)
         hbox.pack_start(btn_add, True, True, 0)
 
     def render_status(self, column, cell, model, iter, data=None):
         enabled = model[iter][3]
-        cell.set_property("text", "Вкл." if enabled else "Выкл.")
+        cell.set_property("text", "Увімк." if enabled else "Вимк.")
 
     def load_autostart_items(self):
         self.liststore.clear()
@@ -146,19 +153,19 @@ class AutostartApp(Gtk.Window):
 
                     menu = Gtk.Menu()
 
-                    item_edit = Gtk.MenuItem(label="Редактировать")
+                    item_edit = Gtk.MenuItem(label="Редагувати")
                     item_edit.connect("activate", self.on_edit_item, path)
                     menu.append(item_edit)
 
                     if enabled:
-                        toggle_label = "Отключить"
+                        toggle_label = "Вимкнути"
                     else:
-                        toggle_label = "Включить"
+                        toggle_label = "Увімкнути"
                     item_toggle = Gtk.MenuItem(label=toggle_label)
                     item_toggle.connect("activate", self.on_toggle_enabled, path, not enabled)
                     menu.append(item_toggle)
 
-                    item_delete = Gtk.MenuItem(label="Удалить")
+                    item_delete = Gtk.MenuItem(label="Видалити")
                     item_delete.connect("activate", self.on_delete_item, path)
                     menu.append(item_delete)
 
@@ -196,13 +203,13 @@ class AutostartApp(Gtk.Window):
         if iter is not None:
             name = self.liststore[iter][0]
 
-            # Подтверждение удаления
+            # Підтвердження видалення
             confirm = Gtk.MessageDialog(
                 transient_for=self,
                 flags=0,
                 message_type=Gtk.MessageType.QUESTION,
                 buttons=Gtk.ButtonsType.YES_NO,
-                text=f"Удалить '{name}' из автозапуска?"
+                text=f"Вилучити '{name}' з автозапуску?"
             )
             response = confirm.run()
             confirm.destroy()
@@ -234,7 +241,7 @@ NoDisplay=false
 
 class EditDialog(Gtk.Dialog):
     def __init__(self, parent, name="", command="", timeout=0):
-        Gtk.Dialog.__init__(self, title="Редактировать приложение", transient_for=parent, flags=0)
+        Gtk.Dialog.__init__(self, title="Редагувати додаток", transient_for=parent, flags=0)
         self.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                          Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.set_default_size(400, 200)
@@ -251,18 +258,18 @@ class EditDialog(Gtk.Dialog):
         self.entry_command.set_text(command)
         self.entry_timeout.set_text(str(timeout))
 
-        # Кнопка "Обзор" рядом с полем для имени приложения
+        # Кнопка "Огляд" поруч із полем для назви додатка
         hbox_name = Gtk.HBox(spacing=6)
-        grid.attach(Gtk.Label(label="Имя приложения:"), 0, 0, 1, 1)
+        grid.attach(Gtk.Label(label="Назва додатка:"), 0, 0, 1, 1)
         hbox_name.pack_start(self.entry_name, True, True, 0)
 
-        btn_browse = Gtk.Button(label="Обзор...")
+        btn_browse = Gtk.Button(label="Огляд...")
         btn_browse.connect("clicked", self.on_browse_clicked)
         hbox_name.pack_start(btn_browse, False, False, 0)
 
         grid.attach(hbox_name, 1, 0, 2, 1)
 
-        grid.attach(Gtk.Label(label="Команда запуска:"), 0, 1, 1, 1)
+        grid.attach(Gtk.Label(label="Команда запуску:"), 0, 1, 1, 1)
         grid.attach(self.entry_command, 1, 1, 2, 1)
 
         grid.attach(Gtk.Label(label="Таймаут (сек):"), 0, 2, 1, 1)
@@ -282,7 +289,7 @@ class EditDialog(Gtk.Dialog):
         return name, command, timeout
 
     def on_browse_clicked(self, widget):
-        dialog = Gtk.Dialog(title="Выберите приложение", transient_for=self, flags=0)
+        dialog = Gtk.Dialog(title="Виберіть додаток", transient_for=self, flags=0)
         dialog.set_default_size(500, 400)
         dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                            Gtk.STOCK_OK, Gtk.ResponseType.OK)
@@ -292,7 +299,7 @@ class EditDialog(Gtk.Dialog):
         box.pack_start(vbox, True, True, 0)
 
         search_entry = Gtk.Entry()
-        search_entry.set_placeholder_text("Поиск...")
+        search_entry.set_placeholder_text("Пошук...")
         vbox.pack_start(search_entry, False, False, 0)
 
         liststore = Gtk.ListStore(Gio.Icon, str, str)
@@ -303,7 +310,7 @@ class EditDialog(Gtk.Dialog):
         icon_renderer = Gtk.CellRendererPixbuf()
         text_renderer = Gtk.CellRendererText()
 
-        column = Gtk.TreeViewColumn("Приложение")
+        column = Gtk.TreeViewColumn("Додаток")
         column.pack_start(icon_renderer, False)
         column.pack_start(text_renderer, True)
         column.add_attribute(icon_renderer, "gicon", 0)
@@ -358,6 +365,11 @@ if __name__ == "__main__":
     win.connect("destroy", Gtk.main_quit)
     win.show_all()
     Gtk.main()
+```
+## Зробіть файл виконуваним
+
+```bash id="cvkqz7"
+chmod +x autostart.pyw
 ```
 
 ## Підсумок

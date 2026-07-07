@@ -35,7 +35,15 @@ Alacarte буде корисною, якщо потрібно:
 * приховати непотрібні пункти меню;
 * створити окрему категорію для власних програм або скриптів.
 
-## Код програми:
+## Створіть файл зі скриптом
+
+Наприклад:
+
+```bash id="drw0n9"
+nano Alacarte.pyw
+```
+Вставте наступний код:
+
 ``` bash
 #!/usr/bin/env python3
 
@@ -51,48 +59,48 @@ import re
 
 class DesktopEntryCreator(Gtk.Window):
     def __init__(self):
-        super().__init__(title="Desktop Entry Creator & Manager")
+        super().__init__(title="Alacarte")
         self.set_border_width(10)
         self.set_default_size(700, 600)
 
         self.exec_path = ""
         self.icon_path = ""
         self.selected_system_icon = ""
-        self.icon_mode = "system"  # "system" или "custom"
+        self.icon_mode = "system"  # "system" або "custom"
         self.desktop_dir = os.path.expanduser("~/.local/share/applications")
         self.categories = self.get_system_categories()
         self.system_icons = self.get_system_icons()
 
-        # Создаем notebook для переключения между созданием и управлением
+        # Створюємо notebook для перемикання між створенням та керуванням
         notebook = Gtk.Notebook()
         self.add(notebook)
 
-        # Вкладка создания ярлыков
+        # Вкладка створення ярликів
         create_page = self.create_create_page()
-        notebook.append_page(create_page, Gtk.Label(label="Создать ярлык"))
+        notebook.append_page(create_page, Gtk.Label(label="Створити ярлик"))
 
-        # Вкладка управления ярлыками
+        # Вкладка керування ярликами
         manage_page = self.create_manage_page()
-        notebook.append_page(manage_page, Gtk.Label(label="Управление ярлыками"))
+        notebook.append_page(manage_page, Gtk.Label(label="Керування ярликами"))
 
     def get_system_icons(self):
-        """Получаем список системных иконок из всех источников"""
+        """Отримуємо список системних іконок з усіх джерел"""
         icons = []
         processed_names = set()
         
-        # 1. Получаем иконки из всех доступных тем
+        # 1. Отримуємо іконки з усіх доступних тем
         try:
             theme = Gtk.IconTheme.get_default()
-            # Получаем все доступные темы
+            # Отримуємо всі доступні теми
             icon_list = theme.list_icons(None)
-            for icon_name in icon_list[:200]:  # Ограничиваем количество
+            for icon_name in icon_list[:200]:  # Обмежуємо кількість
                 if icon_name not in processed_names:
                     icons.append((icon_name, icon_name))
                     processed_names.add(icon_name)
         except Exception as e:
-            print(f"Ошибка получения иконок из темы: {e}")
+            print(f"Помилка отримання іконок із теми: {e}")
 
-        # 2. Ищем иконки в стандартных директориях
+        # 2. Шукаємо іконки в стандартних директоріях
         icon_dirs = [
             "/usr/share/icons",
             "/usr/share/pixmaps",
@@ -100,14 +108,14 @@ class DesktopEntryCreator(Gtk.Window):
             os.path.expanduser("~/.icons")
         ]
         
-        # Получаем все поддиректории с иконками
+        # Отримуємо всі піддиректорії з іконками
         all_icon_paths = []
         for base_dir in icon_dirs:
             if os.path.exists(base_dir):
                 try:
-                    # Рекурсивно ищем иконки во всех поддиректориях
+                    # Рекурсивно шукаємо іконки у всіх піддиректоріях
                     for root, dirs, files in os.walk(base_dir):
-                        for filename in files[:10]:  # Ограничиваем количество файлов в каждой директории
+                        for filename in files[:10]:  # Обмежуємо кількість файлів у кожній директорії
                             if filename.endswith(('.png', '.svg', '.xpm', '.ico', '.jpg', '.jpeg')):
                                 icon_path = os.path.join(root, filename)
                                 icon_name = os.path.splitext(filename)[0]
@@ -116,13 +124,13 @@ class DesktopEntryCreator(Gtk.Window):
                 except:
                     continue
         
-        # Добавляем найденные иконки
-        for icon_name, icon_path in all_icon_paths[:100]:  # Ограничиваем общее количество
+        # Додаємо знайдені іконки
+        for icon_name, icon_path in all_icon_paths[:100]:  # Обмежуємо загальну кількість
             if icon_name not in processed_names:
                 icons.append((icon_name, icon_path))
                 processed_names.add(icon_name)
 
-        # 3. Получаем иконки из .desktop файлов
+        # 3. Отримуємо іконки з .desktop файлів
         desktop_dirs = [
             "/usr/share/applications",
             "/usr/local/share/applications",
@@ -132,14 +140,14 @@ class DesktopEntryCreator(Gtk.Window):
         for desktop_dir in desktop_dirs:
             if os.path.exists(desktop_dir):
                 try:
-                    for filename in os.listdir(desktop_dir)[:50]:  # Ограничиваем количество
+                    for filename in os.listdir(desktop_dir)[:50]:  # Обмежуємо кількість
                         if filename.endswith('.desktop'):
                             filepath = os.path.join(desktop_dir, filename)
                             try:
                                 with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                                     content = f.read()
                                     
-                                    # Ищем Name= в файле
+                                    # Шукаємо Name= у файлі
                                     name_match = re.search(r'Name=([^\n]+)', content)
                                     icon_match = re.search(r'Icon=([^\n]+)', content)
                                     
@@ -147,7 +155,7 @@ class DesktopEntryCreator(Gtk.Window):
                                         app_name = name_match.group(1).strip()
                                         icon_value = icon_match.group(1).strip()
                                         
-                                        # Используем имя приложения как ключ иконки
+                                        # Використовуємо назву додатка як ключ іконки
                                         if app_name not in processed_names:
                                             icons.append((app_name, icon_value))
                                             processed_names.add(app_name)
@@ -156,17 +164,17 @@ class DesktopEntryCreator(Gtk.Window):
                 except:
                     continue
         
-        return icons[:300]  # Ограничиваем общее количество
+        return icons[:300]  # Обмежуємо загальну кількість
 
     def get_system_categories(self):
-        """Получаем список доступных категорий из системных .desktop файлов"""
+        """Отримуємо список доступних категорій із системних .desktop файлів"""
         categories = set()
         system_dirs = [
             "/usr/share/applications",
             "/usr/local/share/applications"
         ]
         
-        # Стандартные категории
+        # Стандартні категорії
         standard_categories = [
             "AudioVideo", "Audio", "Video", "Development", "Education",
             "Game", "Graphics", "Network", "Office", "Science",
@@ -176,7 +184,7 @@ class DesktopEntryCreator(Gtk.Window):
         for category in standard_categories:
             categories.add(category)
         
-        # Ищем категории в системных файлах
+        # Шукаємо категорії в системних файлах
         for system_dir in system_dirs:
             if os.path.exists(system_dir):
                 try:
@@ -186,7 +194,7 @@ class DesktopEntryCreator(Gtk.Window):
                             try:
                                 with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                                     content = f.read()
-                                    # Ищем Categories= в файле
+                                    # Шукаємо Categories= у файлі
                                     match = re.search(r'Categories=([^;\n]+)', content)
                                     if match:
                                         cats = match.group(1).split(';')
@@ -204,23 +212,23 @@ class DesktopEntryCreator(Gtk.Window):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
         
         # Executable
-        self.exec_button = Gtk.Button(label="Выбрать исполняемый файл")
+        self.exec_button = Gtk.Button(label="Вибрати виконуваний файл")
         self.exec_button.connect("clicked", self.on_exec_clicked)
         vbox.pack_start(self.exec_button, False, False, 20)
 
-        self.exec_label = Gtk.Label(label="Файл не выбран")
+        self.exec_label = Gtk.Label(label="Файл не вибрано")
         self.exec_label.set_line_wrap(True)
         self.exec_label.set_justify(Gtk.Justification.LEFT)
         vbox.pack_start(self.exec_label, False, False, 0)
 
-        # Выбор типа иконки
-        icon_type_frame = Gtk.Frame(label="Выбор иконки")
+        # Вибір типу іконки
+        icon_type_frame = Gtk.Frame(label="Вибір іконки")
         icon_type_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         icon_type_frame.add(icon_type_box)
         
-        # Radio buttons для выбора типа иконки
-        self.system_icon_radio = Gtk.RadioButton.new_with_label_from_widget(None, "Выбрать системную иконку")
-        self.custom_icon_radio = Gtk.RadioButton.new_with_label_from_widget(self.system_icon_radio, "Загрузить свою иконку")
+        # Radio buttons для вибору типу іконки
+        self.system_icon_radio = Gtk.RadioButton.new_with_label_from_widget(None, "Вибрати системну іконку")
+        self.custom_icon_radio = Gtk.RadioButton.new_with_label_from_widget(self.system_icon_radio, "Завантажити власну іконку")
         self.system_icon_radio.set_active(True)
         
         self.system_icon_radio.connect("toggled", self.on_icon_type_changed)
@@ -229,46 +237,46 @@ class DesktopEntryCreator(Gtk.Window):
         icon_type_box.pack_start(self.system_icon_radio, False, False, 0)
         icon_type_box.pack_start(self.custom_icon_radio, False, False, 0)
         
-        # Кнопка для выбора системных иконок
-        self.system_icon_button = Gtk.Button(label="Выбрать системную иконку")
+        # Кнопка для вибору системних іконок
+        self.system_icon_button = Gtk.Button(label="Вибрати системну іконку")
         self.system_icon_button.connect("clicked", self.on_system_icon_clicked)
         icon_type_box.pack_start(self.system_icon_button, False, False, 0)
         
-        # Кнопка для загрузки своей иконки
-        self.custom_icon_button = Gtk.Button(label="Выбрать иконку из файла")
+        # Кнопка для завантаження своєї іконки
+        self.custom_icon_button = Gtk.Button(label="Вибрати іконку з файлу")
         self.custom_icon_button.connect("clicked", self.on_custom_icon_clicked)
         self.custom_icon_button.set_sensitive(False)
         icon_type_box.pack_start(self.custom_icon_button, False, False, 0)
 
         vbox.pack_start(icon_type_frame, False, False, 0)
 
-        # Отображение выбранной иконки
+        # Відображення вибраної іконки
         self.icon_image = Gtk.Image()
         self.icon_image.set_size_request(64, 64)
         vbox.pack_start(self.icon_image, False, False, 5)
         
-        # Label для отображения имени выбранной иконки
-        self.icon_name_label = Gtk.Label(label="Иконка не выбрана")
+        # Label для відображення імені вибраної іконки
+        self.icon_name_label = Gtk.Label(label="Іконку не вибрано")
         vbox.pack_start(self.icon_name_label, False, False, 0)
 
         # Name
         self.name_entry = Gtk.Entry()
-        self.name_entry.set_placeholder_text("Название приложения")
+        self.name_entry.set_placeholder_text("Назва додатка")
         self.name_entry.connect("changed", self.on_name_changed)
         vbox.pack_start(self.name_entry, False, False, 0)
 
         # Comment
         self.comment_entry = Gtk.Entry()
-        self.comment_entry.set_placeholder_text("Описание приложения (опционально)")
+        self.comment_entry.set_placeholder_text("Опис додатка (опціонально)")
         vbox.pack_start(self.comment_entry, False, False, 0)
 
         # Category
         category_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
-        category_label = Gtk.Label(label="Категория:")
+        category_label = Gtk.Label(label="Категорія:")
         category_box.pack_start(category_label, False, False, 0)
         
         self.category_combo = Gtk.ComboBoxText()
-        self.category_combo.append_text("Не выбрано")
+        self.category_combo.append_text("Не вибрано")
         for category in self.categories:
             self.category_combo.append_text(category)
         self.category_combo.set_active(0)
@@ -277,18 +285,18 @@ class DesktopEntryCreator(Gtk.Window):
         vbox.pack_start(category_box, False, False, 0)
 
         # Terminal checkbox
-        self.terminal_check = Gtk.CheckButton(label="Запускать в терминале")
+        self.terminal_check = Gtk.CheckButton(label="Запускати в терміналі")
         vbox.pack_start(self.terminal_check, False, False, 0)
 
         # Create Button
-        self.create_button = Gtk.Button(label="Создать ярлык")
+        self.create_button = Gtk.Button(label="Створити ярлик")
         self.create_button.connect("clicked", self.on_create_clicked)
         vbox.pack_start(self.create_button, False, False, 10)
 
         return vbox
 
     def on_icon_type_changed(self, widget):
-        """Обработчик изменения типа иконки"""
+        """Обробник зміни типу іконки"""
         if self.system_icon_radio.get_active():
             self.icon_mode = "system"
             self.custom_icon_button.set_sensitive(False)
@@ -301,43 +309,43 @@ class DesktopEntryCreator(Gtk.Window):
         self.update_icon_preview()
 
     def update_icon_preview(self):
-        """Обновление превью иконки"""
+        """Оновлення прев'ю іконки"""
         try:
             if hasattr(self, 'selected_icon_info') and self.selected_icon_info:
                 icon_name, icon_value = self.selected_icon_info
                 
-                # Пытаемся загрузить иконку несколькими способами
+                # Намагаємося завантажити іконку кількома способами
                 pixbuf = self.load_icon_by_value(icon_value)
                 
                 if pixbuf:
                     self.icon_image.set_from_pixbuf(pixbuf)
-                    self.icon_name_label.set_text(f"Выбрана иконка: {icon_name}")
+                    self.icon_name_label.set_text(f"Вибрано іконку: {icon_name}")
                 else:
                     self.icon_image.set_from_icon_name("image-missing", Gtk.IconSize.DIALOG)
-                    self.icon_name_label.set_text("Иконка не найдена")
+                    self.icon_name_label.set_text("Іконку не знайдено")
             else:
                 self.icon_image.set_from_icon_name("image-missing", Gtk.IconSize.DIALOG)
-                self.icon_name_label.set_text("Иконка не выбрана")
+                self.icon_name_label.set_text("Іконку не вибрано")
         except Exception as e:
-            print(f"Ошибка обновления превью иконки: {e}")
+            print(f"Помилка оновлення прев'ю іконки: {e}")
             self.icon_image.set_from_icon_name("image-missing", Gtk.IconSize.DIALOG)
-            self.icon_name_label.set_text("Иконка не выбрана")
+            self.icon_name_label.set_text("Іконку не вибрано")
 
     def load_icon_by_value(self, icon_value):
-        """Загрузка иконки по значению (имя или путь)"""
+        """Завантаження іконки за значенням (ім'я або шлях)"""
         try:
-            # Если это путь к файлу
+            # Якщо це шлях до файлу
             if os.path.exists(icon_value):
                 return GdkPixbuf.Pixbuf.new_from_file_at_scale(
                     icon_value, 64, 64, True
                 )
             
-            # Если это имя иконки, пытаемся загрузить из темы
+            # Якщо це ім'я іконки, намагаємося завантажити з теми
             theme = Gtk.IconTheme.get_default()
             try:
                 return theme.load_icon(icon_value, 64, 0)
             except:
-                # Пробуем найти иконку в стандартных директориях
+                # Пробуємо знайти іконку в стандартних директоріях
                 icon_dirs = [
                     "/usr/share/icons",
                     "/usr/share/pixmaps",
@@ -361,25 +369,25 @@ class DesktopEntryCreator(Gtk.Window):
         return None
 
     def on_system_icon_clicked(self, widget):
-        """Открытие диалога выбора системной иконки"""
-        dialog = Gtk.Dialog(title="Выбор системной иконки", parent=self, flags=0)
+        """Відкриття діалогу вибору системної іконки"""
+        dialog = Gtk.Dialog(title="Вибір системної іконки", parent=self, flags=0)
         dialog.set_default_size(700, 500)
         
-        # Главный контейнер
+        # Головний контейнер
         content_area = dialog.get_content_area()
         content_area.set_spacing(10)
         content_area.set_border_width(10)
         
-        # Поле поиска
+        # Поле пошуку
         search_entry = Gtk.Entry()
-        search_entry.set_placeholder_text("Поиск иконок...")
+        search_entry.set_placeholder_text("Пошук іконок...")
         content_area.pack_start(search_entry, False, False, 0)
         
-        # Создаем сетку для иконок
+        # Створюємо сітку для іконок
         scrolled = Gtk.ScrolledWindow()
         scrolled.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         
-        # Создаем сетку иконок
+        # Створюємо сітку іконок
         icon_grid = Gtk.FlowBox()
         icon_grid.set_valign(Gtk.Align.START)
         icon_grid.set_max_children_per_line(10)
@@ -389,10 +397,10 @@ class DesktopEntryCreator(Gtk.Window):
         icon_grid.set_row_spacing(8)
         icon_grid.set_column_spacing(8)
         
-        # Храним все иконки для поиска (хранить сами child элементы)
+        # Зберігаємо всі іконки для пошуку (зберігати самі child елементи)
         self.all_icon_children = []  # (child, icon_name_lower)
         
-        # Добавляем иконки в сетку
+        # Додаємо іконки в сітку
         for i, (icon_name, icon_value) in enumerate(self.system_icons):
             icon_box = self.create_icon_widget(icon_name, icon_value)
             if icon_box:
@@ -400,7 +408,7 @@ class DesktopEntryCreator(Gtk.Window):
                 child.add(icon_box)
                 icon_grid.add(child)
                 self.all_icon_children.append((child, icon_name.lower()))
-                # Сохраняем информацию об иконке в child
+                # Зберігаємо інформацію про іконку в child
                 child.icon_info = (icon_name, icon_value)
         
         scrolled.add(icon_grid)
@@ -412,22 +420,22 @@ class DesktopEntryCreator(Gtk.Window):
         
         dialog.show_all()
         
-        # Таймер для debounce поиска
+        # Таймер для debounce пошуку
         self.search_timer = None
         
-        # Обработчик поиска
+        # Обробник пошуку
         def on_search_changed(entry):
-            # Отменяем предыдущий таймер если есть
+            # Скасовуємо попередній таймер якщо є
             if self.search_timer:
                 GLib.source_remove(self.search_timer)
             
-            # Устанавливаем новый таймер (300ms debounce)
+            # Встановлюємо новий таймер (300ms debounce)
             self.search_timer = GLib.timeout_add(300, self.perform_search, 
                                                entry.get_text().lower(), icon_grid)
         
         search_entry.connect("changed", on_search_changed)
         
-        # Обработчик выбора иконки
+        # Обробник вибору іконки
         def on_icon_selected(flowbox, child):
             if hasattr(child, 'icon_info'):
                 self.selected_icon_info = child.icon_info
@@ -444,7 +452,7 @@ class DesktopEntryCreator(Gtk.Window):
                     self.selected_icon_info = child.icon_info
                     self.update_icon_preview()
         
-        # Очищаем таймер
+        # Очищаємо таймер
         if self.search_timer:
             GLib.source_remove(self.search_timer)
             self.search_timer = None
@@ -452,49 +460,49 @@ class DesktopEntryCreator(Gtk.Window):
         dialog.destroy()
 
     def perform_search(self, search_text, icon_grid):
-        """Выполнение поиска иконок"""
+        """Виконання пошуку іконок"""
         try:
-            # Очищаем сетку
+            # Очищаємо сітку
             children = icon_grid.get_children()
             for child in children:
                 icon_grid.remove(child)
             
-            # Добавляем только подходящие иконки
+            # Додаємо тільки підходящі іконки
             matching_children = []
             if search_text == "":
-                # Если пустой поиск, показываем все иконки
+                # Якщо пустий пошук, показуємо всі іконки
                 matching_children = self.all_icon_children
             else:
-                # Иначе показываем только совпадающие
+                # Інакше показуємо тільки ті, що збігаються
                 for child, icon_name_lower in self.all_icon_children:
                     if search_text in icon_name_lower:
                         matching_children.append((child, icon_name_lower))
             
-            # Добавляем подходящие иконки в сетку
+            # Додаємо підходящі іконки в сітку
             for child, icon_name_lower in matching_children:
                 icon_grid.add(child)
                 child.show_all()
             
-            # Обновляем сетку
+            # Оновлюємо сітку
             icon_grid.show()
             
         except Exception as e:
-            print(f"Ошибка поиска: {e}")
+            print(f"Помилка пошуку: {e}")
         
-        # Сбрасываем таймер
+        # Скидаємо таймер
         self.search_timer = None
-        return False  # Важно: возвращаем False чтобы удалить timeout callback
+        return False  # Важливо: повертаємо False щоб видалити timeout callback
 
     def create_icon_widget(self, icon_name, icon_value):
-        """Создание виджета для отображения иконки"""
+        """Створення віджета для відображення іконки"""
         try:
             icon_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
             icon_box.set_size_request(70, 70)
             
-            # Иконка
+            # Іконка
             pixbuf = self.load_icon_by_value(icon_value)
             if pixbuf:
-                # Масштабируем иконку для отображения в сетке
+                # Масштабуємо іконку для відображення в сітці
                 scaled_pixbuf = pixbuf.scale_simple(40, 40, GdkPixbuf.InterpType.BILINEAR)
                 image = Gtk.Image.new_from_pixbuf(scaled_pixbuf)
             else:
@@ -504,12 +512,12 @@ class DesktopEntryCreator(Gtk.Window):
         
         icon_box.pack_start(image, False, False, 0)
         
-        # Название
+        # Назва
         display_name = icon_name[:12] + "..." if len(icon_name) > 12 else icon_name
         label = Gtk.Label(label=display_name)
         label.set_max_width_chars(12)
         label.set_ellipsize(3)  # Pango.EllipsizeMode.END
-        # Используем CSS для уменьшения шрифта
+        # Використовуємо CSS для зменшення шрифту
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(b"label { font-size: 9px; }")
         context = label.get_style_context()
@@ -519,9 +527,9 @@ class DesktopEntryCreator(Gtk.Window):
         return icon_box
 
     def on_custom_icon_clicked(self, widget):
-        """Выбор пользовательской иконки"""
+        """Вибір користувацької іконки"""
         dialog = Gtk.FileChooserDialog(
-            title="Выберите иконку",
+            title="Виберіть іконку",
             parent=self,
             action=Gtk.FileChooserAction.OPEN
         )
@@ -530,14 +538,14 @@ class DesktopEntryCreator(Gtk.Window):
             Gtk.STOCK_OPEN, Gtk.ResponseType.OK
         )
 
-        # Устанавливаем начальную папку - папку исполняемого файла
+        # Встановлюємо початкову папку - папку виконуваного файлу
         if self.exec_path:
             exec_dir = os.path.dirname(self.exec_path)
             if os.path.exists(exec_dir):
                 dialog.set_current_folder(exec_dir)
 
         filter_images = Gtk.FileFilter()
-        filter_images.set_name("Изображения")
+        filter_images.set_name("Зображення")
         filter_images.add_mime_type("image/png")
         filter_images.add_mime_type("image/svg+xml")
         filter_images.add_mime_type("image/jpeg")
@@ -548,69 +556,69 @@ class DesktopEntryCreator(Gtk.Window):
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             self.icon_path = dialog.get_filename()
-            # Для пользовательской иконки сохраняем информацию
+            # Для користувацької іконки зберігаємо інформацію
             icon_name = os.path.splitext(os.path.basename(self.icon_path))[0]
             self.selected_icon_info = (icon_name, self.icon_path)
             self.update_icon_preview()
         dialog.destroy()
 
     def on_name_changed(self, widget):
-        """Автоматический выбор иконки при изменении названия"""
-        pass  # Пока отключено, так как выбор через UI
+        """Автоматичний вибір іконки при зміні назви"""
+        pass  # Поки вимкнено, оскільки вибір відбувається через UI
 
     def create_manage_page(self):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         
         # Заголовок
-        label = Gtk.Label(label="Управление созданными ярлыками")
+        label = Gtk.Label(label="Керування створеними ярликами")
         vbox.pack_start(label, False, False, 0)
         
-        # Список ярлыков
+        # Список ярликів
         scrolled = Gtk.ScrolledWindow()
         scrolled.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         
-        # Создаем список
-        self.liststore = Gtk.ListStore(str, str, str, str, str)  # имя, путь, иконка, комментарий, категория
+        # Створюємо список
+        self.liststore = Gtk.ListStore(str, str, str, str, str)  # ім'я, шлях, іконка, коментар, категорія
         self.treeview = Gtk.TreeView(model=self.liststore)
         
         # Колонки
         renderer_text = Gtk.CellRendererText()
-        column_name = Gtk.TreeViewColumn("Название", renderer_text, text=0)
+        column_name = Gtk.TreeViewColumn("Назва", renderer_text, text=0)
         self.treeview.append_column(column_name)
         
-        column_comment = Gtk.TreeViewColumn("Описание", renderer_text, text=3)
+        column_comment = Gtk.TreeViewColumn("Опис", renderer_text, text=3)
         self.treeview.append_column(column_comment)
         
-        column_category = Gtk.TreeViewColumn("Категория", renderer_text, text=4)
+        column_category = Gtk.TreeViewColumn("Категорія", renderer_text, text=4)
         self.treeview.append_column(column_category)
         
-        column_path = Gtk.TreeViewColumn("Путь", renderer_text, text=1)
+        column_path = Gtk.TreeViewColumn("Шлях", renderer_text, text=1)
         self.treeview.append_column(column_path)
         
         scrolled.add(self.treeview)
         vbox.pack_start(scrolled, True, True, 0)
         
-        # Кнопки управления
+        # Кнопки керування
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         
-        self.refresh_button = Gtk.Button(label="Обновить список")
+        self.refresh_button = Gtk.Button(label="Оновити список")
         self.refresh_button.connect("clicked", self.on_refresh_clicked)
         button_box.pack_start(self.refresh_button, False, False, 0)
         
-        self.delete_button = Gtk.Button(label="Удалить выбранный")
+        self.delete_button = Gtk.Button(label="Видалити вибраний")
         self.delete_button.connect("clicked", self.on_delete_clicked)
         button_box.pack_start(self.delete_button, False, False, 0)
         
         vbox.pack_start(button_box, False, False, 0)
         
-        # Загружаем список при первом открытии
+        # Завантажуємо список при першому відкритті
         self.load_desktop_entries()
         
         return vbox
 
     def on_exec_clicked(self, widget):
         dialog = Gtk.FileChooserDialog(
-            title="Выберите исполняемый файл",
+            title="Виберіть виконуваний файл",
             parent=self,
             action=Gtk.FileChooserAction.OPEN
         )
@@ -630,7 +638,7 @@ class DesktopEntryCreator(Gtk.Window):
         comment = self.comment_entry.get_text().strip()
         category_index = self.category_combo.get_active()
         category = None
-        if category_index > 0:  # Если выбрана не "Не выбрано"
+        if category_index > 0:  # Якщо вибрано не "Не вибрано"
             category = self.category_combo.get_active_text()
         
         if not name or not self.exec_path:
@@ -639,30 +647,30 @@ class DesktopEntryCreator(Gtk.Window):
                 flags=0,
                 message_type=Gtk.MessageType.WARNING,
                 buttons=Gtk.ButtonsType.OK,
-                text="Пожалуйста, укажите название и исполняемый файл."
+                text="Будь ласка, вкажіть назву та виконуваний файл."
             )
             dialog.run()
             dialog.destroy()
             return
 
-        # Определяем имя файла ярлыка
+        # Визначаємо ім'я файлу ярлика
         safe_name = "".join(c for c in name if c.isalnum() or c in " _-").strip()
         if not safe_name:
             safe_name = "application"
         
         os.makedirs(self.desktop_dir, exist_ok=True)
 
-        # Определяем иконку
-        icon_value = "application-x-executable"  # значение по умолчанию
+        # Визначаємо іконку
+        icon_value = "application-x-executable"  # значення за замовчуванням
         
         if hasattr(self, 'selected_icon_info') and self.selected_icon_info:
             icon_name, icon_source = self.selected_icon_info
             
             if self.icon_mode == "system":
-                # Системная иконка - используем исходное значение
+                # Системна іконка - використовуємо початкове значення
                 icon_value = icon_source
             elif self.icon_mode == "custom" and os.path.exists(icon_source):
-                # Пользовательская иконка - копируем и используем путь
+                # Користувацька іконка - копіюємо та використовуємо шлях
                 icon_ext = os.path.splitext(icon_source)[1]
                 icon_target = os.path.join(self.desktop_dir, f"{safe_name}{icon_ext}")
                 try:
@@ -674,19 +682,19 @@ class DesktopEntryCreator(Gtk.Window):
                         flags=0,
                         message_type=Gtk.MessageType.ERROR,
                         buttons=Gtk.ButtonsType.OK,
-                        text=f"Ошибка копирования иконки: {str(e)}"
+                        text=f"Помилка копіювання іконки: {str(e)}"
                     )
                     dialog_error.run()
                     dialog_error.destroy()
                     return
 
-        # Создаем .desktop файл
+        # Створюємо .desktop файл
         desktop_file_path = os.path.join(self.desktop_dir, f"{safe_name}.desktop")
         
         terminal = "true" if self.terminal_check.get_active() else "false"
         
-        # Формируем категории
-        categories_str = "Utility;"  # По умолчанию
+        # Формуємо категорії
+        categories_str = "Utility;"  # За замовчуванням
         if category:
             categories_str = f"{category};"
         
@@ -704,7 +712,7 @@ Categories={categories_str}
             with open(desktop_file_path, 'w') as f:
                 f.write(desktop_content)
             
-            # Делаем файл исполняемым
+            # Робимо файл виконуваним
             os.chmod(desktop_file_path, 0o755)
             
             self.refresh_applications()
@@ -714,12 +722,12 @@ Categories={categories_str}
                 flags=0,
                 message_type=Gtk.MessageType.INFO,
                 buttons=Gtk.ButtonsType.OK,
-                text="Ярлык успешно создан и добавлен!"
+                text="Ярлик успішно створено та додано!"
             )
             dialog.run()
             dialog.destroy()
             
-            # Очищаем поля
+            # Очищаємо поля
             self.clear_create_fields()
             
         except Exception as e:
@@ -728,29 +736,29 @@ Categories={categories_str}
                 flags=0,
                 message_type=Gtk.MessageType.ERROR,
                 buttons=Gtk.ButtonsType.OK,
-                text=f"Ошибка создания ярлыка: {str(e)}"
+                text=f"Помилка створення ярлика: {str(e)}"
             )
             dialog_error.run()
             dialog_error.destroy()
 
     def clear_create_fields(self):
-        """Очищаем поля создания ярлыка"""
+        """Очищаємо поля створення ярлика"""
         self.exec_path = ""
         self.icon_path = ""
         self.selected_system_icon = ""
         self.selected_icon_info = None
         self.icon_mode = "system"
         self.system_icon_radio.set_active(True)
-        self.exec_label.set_text("Файл не выбран")
+        self.exec_label.set_text("Файл не вибрано")
         self.icon_image.set_from_icon_name("image-missing", Gtk.IconSize.DIALOG)
-        self.icon_name_label.set_text("Иконка не выбрана")
+        self.icon_name_label.set_text("Іконку не вибрано")
         self.name_entry.set_text("")
         self.comment_entry.set_text("")
         self.category_combo.set_active(0)
         self.terminal_check.set_active(False)
 
     def load_desktop_entries(self):
-        """Загружаем список .desktop файлов"""
+        """Завантажуємо список .desktop файлів"""
         self.liststore.clear()
         os.makedirs(self.desktop_dir, exist_ok=True)
         
@@ -777,26 +785,26 @@ Categories={categories_str}
                 if name:
                     self.liststore.append([name, file_path, icon_path, comment, categories])
             except Exception:
-                # Пропускаем файлы с ошибками
+                # Пропускаємо файли з помилками
                 continue
 
     def on_refresh_clicked(self, widget):
-        """Обновить список ярлыков"""
-        # Обновляем список категорий
+        """Оновити список ярлыків"""
+        # Оновлюємо список категорій
         self.categories = self.get_system_categories()
         self.category_combo.remove_all()
-        self.category_combo.append_text("Не выбрано")
+        self.category_combo.append_text("Не вибрано")
         for category in self.categories:
             self.category_combo.append_text(category)
         self.category_combo.set_active(0)
         
-        # Обновляем список системных иконок
+        # Оновлюємо список системних іконок
         self.system_icons = self.get_system_icons()
         
         self.load_desktop_entries()
 
     def on_delete_clicked(self, widget):
-        """Удалить выбранный ярлык"""
+        """Видалити вибраний ярлик"""
         selection = self.treeview.get_selection()
         model, treeiter = selection.get_selected()
         
@@ -806,7 +814,7 @@ Categories={categories_str}
                 flags=0,
                 message_type=Gtk.MessageType.WARNING,
                 buttons=Gtk.ButtonsType.OK,
-                text="Пожалуйста, выберите ярлык для удаления."
+                text="Будь ласка, виберіть ярлик для видалення."
             )
             dialog.run()
             dialog.destroy()
@@ -816,44 +824,39 @@ Categories={categories_str}
         file_path = model[treeiter][1]
         icon_path = model[treeiter][2]
         
-        # Подтверждение удаления
+        # Підтвердження видалення
         dialog = Gtk.MessageDialog(
             transient_for=self,
             flags=0,
             message_type=Gtk.MessageType.QUESTION,
             buttons=Gtk.ButtonsType.YES_NO,
-            text=f"Вы уверены, что хотите удалить ярлык '{name}'?"
+            text=f"Ви дійсно хочете видалити ярлик \"{name}\"?"
         )
-        dialog.format_secondary_text("Это действие нельзя отменить.")
-        
         response = dialog.run()
         dialog.destroy()
         
         if response == Gtk.ResponseType.YES:
             try:
-                # Удаляем .desktop файл
+                # Видаляємо .desktop файл
                 if os.path.exists(file_path):
                     os.remove(file_path)
                 
-                # Удаляем иконку, если она существует и находится в той же папке
-                if icon_path and os.path.exists(icon_path):
-                    icon_dir = os.path.dirname(icon_path)
-                    if icon_dir == self.desktop_dir:
-                        os.remove(icon_path)
+                # Якщо іконка була скопійована в цю ж папку, видаляємо і її
+                if icon_path and icon_path.startswith(self.desktop_dir) and os.path.exists(icon_path):
+                    os.remove(icon_path)
                 
-                # Обновляем список
-                self.load_desktop_entries()
                 self.refresh_applications()
+                self.load_desktop_entries()
                 
-                dialog_success = Gtk.MessageDialog(
+                dialog_info = Gtk.MessageDialog(
                     transient_for=self,
                     flags=0,
                     message_type=Gtk.MessageType.INFO,
                     buttons=Gtk.ButtonsType.OK,
-                    text="Ярлык успешно удален!"
+                    text="Ярлик успішно видалено."
                 )
-                dialog_success.run()
-                dialog_success.destroy()
+                dialog_info.run()
+                dialog_info.destroy()
                 
             except Exception as e:
                 dialog_error = Gtk.MessageDialog(
@@ -861,48 +864,29 @@ Categories={categories_str}
                     flags=0,
                     message_type=Gtk.MessageType.ERROR,
                     buttons=Gtk.ButtonsType.OK,
-                    text=f"Ошибка удаления ярлыка: {str(e)}"
+                    text=f"Помилка видалення ярлика: {str(e)}"
                 )
                 dialog_error.run()
                 dialog_error.destroy()
 
     def refresh_applications(self):
-        """Пытаемся обновить меню приложений"""
+        """Оновлення меню додатків системи"""
         try:
-            subprocess.run(["update-desktop-database", self.desktop_dir], 
-                         check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        except:
-            pass
-
-        try:
-            subprocess.run(["glib-compile-schemas", "/usr/share/glib-2.0/schemas"], 
-                         check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        except:
-            pass
-
-        try:
-            subprocess.run(["kbuildsycoca5"], 
-                         check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        except:
-            pass
-
-        try:
-            subprocess.run(["xdg-desktop-menu", "forceupdate"], 
-                         check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        except:
-            pass
-
-        try:
-            subprocess.run(["notify-send", "Desktop Manager", "Меню приложений обновлено"], 
-                         check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # Намагаємося оновити кеш меню через стандартні утиліти
+            subprocess.run(["update-desktop-database", self.desktop_dir], check=False)
         except:
             pass
 
 if __name__ == "__main__":
-    app = DesktopEntryCreator()
-    app.connect("destroy", Gtk.main_quit)
-    app.show_all()
+    win = DesktopEntryCreator()
+    win.connect("destroy", Gtk.main_quit)
+    win.show_all()
     Gtk.main()
+```
+## Зробіть файл виконуваним
+
+```bash id="cvkqz7"
+chmod +x Alacarte.pyw
 ```
 
 > [!IMPORTANT]

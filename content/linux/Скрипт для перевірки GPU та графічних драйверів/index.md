@@ -40,37 +40,20 @@ detect_distro() {
   fi
 }
 
-DISTRO=$(detect_distro)
-
 auto_install() {
   local cmd=$1
-  local apt_pkg=$2
-  local dnf_pkg=$3
-
-  if command -v "$cmd" &>/dev/null; then
-    return
+  local pkg=$2
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "Встановлюю $pkg..."
+    sudo apt update
+    sudo apt install -y "$pkg"
   fi
-
-  echo "Встановлюю $cmd..."
-
-  case "$DISTRO" in
-    fedora)
-      sudo dnf install -y $dnf_pkg
-      ;;
-    ubuntu|neon|linuxmint)
-      sudo apt update
-      sudo apt install -y $apt_pkg
-      ;;
-    *)
-      echo "⚠️ Автоматичне встановлення не підтримується для $DISTRO."
-      ;;
-  esac
 }
 
-# Встановлення необхідних утиліт
-auto_install glxinfo mesa-utils mesa-demos
-auto_install clinfo clinfo clinfo
-auto_install vulkaninfo vulkan-tools vulkan-tools
+# Встановлюємо потрібні утиліти, якщо вони відсутні
+auto_install glxinfo mesa-utils
+auto_install clinfo clinfo
+auto_install vulkaninfo vulkan-tools
 
 echo "=== OpenGL Info ==="
 glxinfo | grep "OpenGL"
@@ -79,7 +62,7 @@ echo -e "\n=== OpenCL Devices ==="
 if clinfo | grep -q "Platform Name"; then
   clinfo | grep "Platform Name"
 else
-  echo "OpenCL пристрої не знайдено."
+  echo "OpenCL пристроїв не знайдено."
 fi
 
 echo -e "\n=== Vulkan Devices ==="
@@ -108,23 +91,25 @@ else
   echo "Vulkan: не працює"
 fi
 
+distro=$(detect_distro)
 if ! clinfo | grep -q "Platform Name"; then
   echo
-  echo "Рекомендації щодо встановлення OpenCL для $DISTRO:"
-
-  case "$DISTRO" in
-    fedora)
-      echo "sudo dnf install rocm-opencl"
-      echo "sudo dnf install mesa-libOpenCL"
+  echo "Рекомендації щодо встановлення OpenCL для $distro:"
+  case $distro in
+    neon)
+      echo "sudo apt install mesa-opencl-icd ocl-icd-libopencl1"
       ;;
-    ubuntu|neon)
+    ubuntu)
       echo "sudo apt install mesa-opencl-icd ocl-icd-libopencl1"
       ;;
     linuxmint)
       echo "sudo apt install mesa-opencl-icd"
       ;;
+    fedora)
+      echo "sudo dnf install rocm-opencl mesa-libOpenCL"
+      ;;
     *)
-      echo "Встановіть OpenCL-драйвери, що відповідають вашому дистрибутиву та відеокарті."
+      echo "Спробуйте встановити OpenCL драйвери, які підходять для вашого дистрибутива."
       ;;
   esac
 fi
