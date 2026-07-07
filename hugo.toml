@@ -27,7 +27,20 @@ defaultContentLanguage = "uk"
 
 # Формати виводу для пошуку
 [outputs]
-  home = ["HTML", "JSON"]
+  home = ["HTML", "JSON", "COVERS", "ServiceWorker"]
+
+[outputFormats]
+  [outputFormats.COVERS]
+    mediaType = "application/json"
+    baseName = "covers"
+    isPlainText = true
+    notAlternative = true
+
+  [outputFormats.ServiceWorker]
+    mediaType = "text/javascript"
+    baseName = "sw"
+    isPlainText = true
+    notAlternative = true
 
 # Sitemap
 [sitemap]

@@ -1,0 +1,17 @@
+{{- $covers := slice -}}
+{{- range site.RegularPages -}}
+  {{- if and (not .Draft) .Params.image -}}
+    {{- $resolved := partial "post-image-resolve.html" . -}}
+    {{- if $resolved.imageResource -}}
+      {{- $processed := $resolved.imageResource.Process "fill 600x400 webp q82 smart" -}}
+      {{- $processed2x := $resolved.imageResource.Process "fill 1200x800 webp q75 smart" -}}
+      {{- $covers = $covers | append $processed.RelPermalink -}}
+      {{- $covers = $covers | append $processed2x.RelPermalink -}}
+      {{- $single := $resolved.imageResource.Process "fit 1200x630 webp q85 smart" -}}
+      {{- $single2x := $resolved.imageResource.Process "fit 2400x1260 webp q75 smart" -}}
+      {{- $covers = $covers | append $single.RelPermalink -}}
+      {{- $covers = $covers | append $single2x.RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $covers | jsonify -}}

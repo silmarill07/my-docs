@@ -4,5 +4,12 @@
       navigator.serviceWorker.register('/sw.js')
         .catch(err => console.warn('SW registration failed:', err));
     });
+
+    // When network comes back — tell SW to resume background precache
+    window.addEventListener('online', () => {
+      if (navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage('online');
+      }
+    });
   }
 </script>
