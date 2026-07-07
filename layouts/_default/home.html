@@ -1,4 +1,32 @@
 {{ define "main" }}
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="hero-title-logo" style="background: linear-gradient(90deg, #c485f6 0%, #dbabff 50%, #00ffff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; display: inline-block;">{{ site.Title }}</span>
+          </h1>
+          {{ if site.Params.description }}
+            <p class="hero-subtitle">&gt; {{ site.Params.description }}</p>
+          {{ else if .Description }}
+            <p class="hero-subtitle">&gt; {{ .Description }}</p>
+          {{ end }}
+          {{ if site.Params.social }}
+            <div class="hero-social">
+              {{ partial "social-links.html" . }}
+            </div>
+          {{ end }}
+        </div>
+        <div class="hero-image">
+          {{ with resources.Get "img/logo.png" }}
+            {{ with .Process "resize 512x webp" }}
+              <img src="{{ .RelPermalink }}" alt="{{ site.Title }}" class="hero-logo">
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </section>
   <div class="home-container">
     <section class="posts-section">
       <h2 class="posts-title">{{ i18n "recentPosts" }}</h2>

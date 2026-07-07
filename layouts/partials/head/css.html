@@ -229,4 +229,57 @@
     background-clip: text !important;
     color: transparent !important;
   }
+
+  .hero-title {
+    display: block !important;
+  }
+
+  .hero-title-logo {
+    font-size: clamp(2.5rem, 5vw, 4.5rem) !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+    white-space: normal !important;
+    display: inline-block !important;
+    background: linear-gradient(90deg, #c485f6 0%, #dbabff 50%, #00ffff 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+
+  .hero-logo {
+    max-width: 250px !important;
+    width: clamp(120px, 20vw, 250px) !important;
+    height: auto !important;
+  }
+
+  .hero-container {
+    max-width: 900px !important;
+  }
+
+  .hero-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr auto !important;
+    align-items: center !important;
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      grid-template-columns: 1fr !important;
+    }
+
+    .hero-image {
+      justify-content: center !important;
+    }
+
+    .hero-section {
+      padding-top: var(--spacing-lg) !important;
+      padding-bottom: var(--spacing-lg) !important;
+      margin-bottom: var(--spacing-lg) !important;
+    }
+  }
 </style>

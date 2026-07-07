@@ -79,8 +79,6 @@ defaultContentLanguage = "uk"
   [languages.uk.params]
     description = "Мій сайт документації"
     author = "My Docs"
-    heroTitleLine1 = "МІЙ САЙТ"
-    heroTitleLine2 = "ДОКУМЕНТАЦІЯ"
     custom404Message = "На жаль, сторінку, яку ви шукаєте, не вдалося знайти."
     footerText = "Створено за допомогою Hugo та теми Mana"
 
