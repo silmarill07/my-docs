@@ -29,6 +29,10 @@ defaultContentLanguage = "uk"
 [outputs]
   home = ["HTML", "JSON", "COVERS", "ServiceWorker"]
 
+[mediaTypes]
+  [mediaTypes."application/manifest+json"]
+    suffixes = ["webmanifest"]
+
 [outputFormats]
   [outputFormats.COVERS]
     mediaType = "application/json"

@@ -170,7 +170,7 @@ async function handleImage(request, url) {
     // Cover: network first, fallback to section default image
     try {
       const res = await fetch(request);
-      if (res.ok) return res;
+      if (res && res.ok) return res;
     } catch (_) {}
     return sectionFallback(url.pathname);
   }
@@ -181,11 +181,11 @@ async function handleImage(request, url) {
 
   try {
     const res = await fetch(request);
-    if (res.ok) {
+    if (res && res.ok) {
       const cache = await caches.open(IMAGES_CACHE);
       cache.put(request, res.clone());
     }
-    return res;
+    return res || sectionFallback(url.pathname);
   } catch (_) {
     return sectionFallback(url.pathname);
   }
