@@ -5,6 +5,7 @@ draft: false
 tags: ["linux", "distrobox"]
 image: "1.png"
 description: "Створення зручних команд для автоматизації встановлення, видалення та оновлення програм у Distrobox на Fedora Atomic, Kinoite, Silverblue та інших атомарних системах."
+slug: "distrobox-automation"
 ---
 
 На атомарних дистрибутивах, таких як Fedora Kinoite, Silverblue або інших системах на базі `rpm-ostree`, більшість користувацьких програм зручно встановлювати через **Distrobox**. Проте постійно вводити довгі команди не дуже комфортно.

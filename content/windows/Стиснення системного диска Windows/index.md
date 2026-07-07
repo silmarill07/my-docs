@@ -5,6 +5,7 @@ draft: false
 tags: ["windows"]
 image: "2.png"
 description: "Якщо потрібно зменшити обсяг, який займає Windows на системному диску, можна скористатися вбудованою функцією CompactOS"
+slug: "compress-windows-system-drive"
 ---
 
 > [!TIP]

@@ -5,6 +5,7 @@ draft: false
 tags: ["linux", "microsoft edge"]
 image: "1.png"
 description: "Як виправити некоректне відображення спливаючих підказок (title) у Microsoft Edge на KDE Plasma."
+slug: "microsoft-edge-kde-title-fix"
 ---
 
 У деяких випадках в **Microsoft Edge** під KDE Plasma спливаючі підказки (`title`) можуть відображатися некоректно або працювати з помилками при використанні Wayland.

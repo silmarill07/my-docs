@@ -5,6 +5,7 @@ draft: false
 tags: ["linux", "fedora", "ext4"]
 image: "1.png"
 description: "Покрокова інструкція встановлення Fedora з розбивкою диска на ext4 через GParted."
+slug: "install-fedora-ext4"
 ---
 
 # Підготовка диска та встановлення Fedora

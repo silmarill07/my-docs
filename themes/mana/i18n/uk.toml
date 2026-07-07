@@ -40,7 +40,7 @@ allDates = "Всі дати"
 clearFilters = "Скинути фільтри"
 
 # Пагінація
-pageOf = "Сторінка %s з %s"
+pageOf = "Сторінка %d з %d"
 postSingular = "запис"
 postPlural = "записів"
 pageSingular = "сторінка"

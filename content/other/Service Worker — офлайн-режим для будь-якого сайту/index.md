@@ -5,6 +5,7 @@ draft: false
 tags: ["other", "service sorker"]
 image: "1.png"
 description: "Перетворіть свій сайт на вебзастосунок, який може працювати навіть без підключення до Інтернету."
+slug: "service-worker-offline-mode"
 ---
 
 ## Що таке Service Worker?

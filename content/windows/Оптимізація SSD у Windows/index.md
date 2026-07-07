@@ -5,6 +5,7 @@ draft: false
 tags: ["windows", "ssd"]
 image: "1.png"
 description: "Правильне налаштування SSD допомагає підтримувати його продуктивність і продовжує термін служби накопичувача."
+slug: "optimize-ssd-in-windows"
 ---
 
 ## Увімкнення TRIM

@@ -5,6 +5,7 @@ draft: false
 tags: ["windows"]
 image: "1.png"
 description: "Якщо під час роботи в Windows курсор введення тексту періодично зникає або стає невидимим, проблему можна вирішити, змінивши стандартний покажчик для виділення тексту."
+slug: "fix-missing-mouse-cursor-in-windows"
 ---
 
 > [!TIP]

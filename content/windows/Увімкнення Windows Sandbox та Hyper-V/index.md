@@ -5,7 +5,7 @@ draft: false
 tags: ["windows"]
 image: "1.png"
 description: "Покрокова інструкція з увімкнення Windows Sandbox, Hyper-V Manager і необхідних компонентів віртуалізації у Windows."
-slug: "uvimknennya-windows-sandbox-hyper-v"
+slug: "windows-sandbox-hyper-v"
 ---
 
 Windows містить вбудовані засоби віртуалізації, які дозволяють запускати віртуальні машини та ізольоване середовище **Windows Sandbox**. За замовчуванням ці компоненти можуть бути вимкнені.
