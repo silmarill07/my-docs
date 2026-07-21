@@ -13,6 +13,8 @@ defaultContentLanguage = "uk"
     endLevel = 6
     ordered = false
   [markup.goldmark]
+    [markup.goldmark.extensions]
+      table = true
     [markup.goldmark.renderer]
       unsafe = true
     [markup.goldmark.parser]
