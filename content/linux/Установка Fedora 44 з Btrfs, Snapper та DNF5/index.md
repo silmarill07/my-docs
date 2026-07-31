@@ -2,7 +2,7 @@
 title: "Установка Fedora 44 з Btrfs, Snapper та DNF5"
 date: 2026-07-31
 draft: false
-tags: ["linux", "btrfs", "fedora"]
+tags: ["linux", "btrfs", "fedora", "snapper"]
 image: "1.png"
 description: "Встановлення Fedora 44 з файловою системою Btrfs, автоматичними знімками Snapper, grub-btrfs та інтеграцією з DNF5."
 slug: "fedora-44-btrfs-snapper-dnf5"
