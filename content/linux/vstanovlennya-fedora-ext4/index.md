@@ -3,7 +3,7 @@ title: "Встановлення Fedora на ext4"
 date: 2026-06-27
 draft: false
 tags: ["linux", "fedora", "ext4"]
-image: "1.png"
+image: "1.jpeg"
 description: "Покрокова інструкція встановлення Fedora з розбивкою диска на ext4 через GParted."
 slug: "install-fedora-ext4"
 ---

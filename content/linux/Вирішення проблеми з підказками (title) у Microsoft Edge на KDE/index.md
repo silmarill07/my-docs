@@ -3,7 +3,7 @@ title: "Вирішення проблеми з підказками (title) у M
 date: 2026-07-01
 draft: false
 tags: ["linux", "microsoft edge"]
-image: "1.png"
+image: "1.jpeg"
 description: "Як виправити некоректне відображення спливаючих підказок (title) у Microsoft Edge на KDE Plasma."
 slug: "microsoft-edge-kde-title-fix"
 ---

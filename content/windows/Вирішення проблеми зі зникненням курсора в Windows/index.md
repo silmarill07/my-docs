@@ -3,7 +3,7 @@ title: "Вирішення проблеми зі зникненням курсо
 date: 2026-06-27
 draft: false
 tags: ["windows"]
-image: "1.png"
+image: "1.jpeg"
 description: "Якщо під час роботи в Windows курсор введення тексту періодично зникає або стає невидимим, проблему можна вирішити, змінивши стандартний покажчик для виділення тексту."
 slug: "fix-missing-mouse-cursor-in-windows"
 ---

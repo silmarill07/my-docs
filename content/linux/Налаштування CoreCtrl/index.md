@@ -3,7 +3,7 @@ title: "Налаштування CoreCtrl"
 date: 2026-07-01
 draft: false
 tags: ["linux", "corectrl"]
-image: "1.png"
+image: "1.jpeg"
 description: "Покрокова інструкція зі встановлення, та автозапуску CoreCtrl без запиту пароля."
 slug: "corectrl-setup"
 ---

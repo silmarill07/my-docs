@@ -3,7 +3,7 @@ title: "Усунення фризів на Btrfs"
 date: 2026-06-27
 draft: false
 tags: ["linux", "btrfs"]
-image: "1.png"
+image: "1.jpeg"
 description: "Якщо під час роботи системи на файловій системі Btrfs спостерігаються короткочасні зависання або фризи, їх можна зменшити, змінивши параметри монтування..."
 slug: "fix-btrfs-freezes"
 ---
